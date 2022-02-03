@@ -21,7 +21,7 @@ COMPILED_DIR	=	./compiled_sources
 OBJS			=	$(SRCS:.cpp=.o)
 
 CC				=	clang++
-FLAGS			=	-Wall -Wextra -Werror -std=c++98 -g
+FLAGS			=	-Wall -Wextra -Werror -std=c++98 -g #3 -fsanitize=address
 
 all: $(NAME)
 

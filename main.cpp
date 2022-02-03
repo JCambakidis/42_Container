@@ -82,23 +82,30 @@ int main(int argc, char const *argv[])
 
 	RBTree<int, std::string> tree;
 	
-	tree = tree.insert(tree.getRoot(), tree.createNode(9, "ccou"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(5, "ffff"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(1, "AAA"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(5, "ffff"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(8, "123"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(10, "coucou"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(5, "ffff"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(150, "oui"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(5, "ffff"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(100, "oui"));
-	tree = tree.insert(tree.getRoot(), tree.createNode(6, "oui"));
+	tree.insert(tree.createNode(9, "ccou"));
+	tree.insert(tree.createNode(5, "ffff"));
+	tree.insert(tree.createNode(1, "AAA"));
+	tree.insert(tree.createNode(5, "ffff"));
+	tree.insert(tree.createNode(8, "123"));
+	tree.insert(tree.createNode(10, "coucou"));
+	tree.insert(tree.createNode(5, "ffff"));
+	tree.insert(tree.createNode(150, "oui"));
+	tree.insert(tree.createNode(5, "ffff"));
+	tree.insert(tree.createNode(100, "oui"));
+	tree.insert(tree.createNode(6, "oui"));
 
-	BiTreeNode<int, std::string> *tmp = tree.find(10);
+	BiTreeNode<int, std::string> *tmp;
+	try
+	{
+		tmp = tree.find(150);
+		std::cout << tmp->data.first << "  " << tmp->data.second << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
-	std::cout << tmp->data.first << "  " << tmp->data.second << std::endl;
-
-	//tree.print_tree(tree.getRoot());
+	tree.print_tree(tree.getRoot());
 
 	return 0;
 }

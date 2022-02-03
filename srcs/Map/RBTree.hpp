@@ -92,13 +92,26 @@ class RBTree
 			}
 		}
 
+		BiTreeNode<Key, T> *find(Key key, BiTreeNode<Key, T> *n)
+		{
+			if (n == NULL)
+				return NULL;
+			else if (n->data.first == key)
+				return n;
+			else if (n->data.first >= key)
+				return find(key, n->left);
+			else if (n->data.first <= key)
+				return find(key, n->right);
+			return NULL;
+		}
+
 	public:
 		RBTree(void): _root(NULL) {}
 		RBTree(BiTreeNode<Key, T> *n): _root(n) {}
 		RBTree(RBTree const &instance) : _root(instance._root) {}
 		RBTree &operator=(RBTree const &rhs) { _root = rhs._root; return *this;}
 
-		~RBTree(void) { clear(_root); }
+		~RBTree(void) {clear(_root); _root = NULL;}
 
 		BiTreeNode<Key, T> *getRoot()
 		{
@@ -185,39 +198,23 @@ class RBTree
 		{
 			recursive_insert(root, n);
 			insert_repare_tree(n);
-
 			root = n;
-
 			while(parent(root) != NULL)
 				root = parent(root);
 			return root;
 		}
 
-
-		BiTreeNode<Key, T> *find(Key key, BiTreeNode<Key, T> *n)
-		{
-			if (n == NULL)
-				return NULL;
-			else if (n->data.first == key)
-				return n;
-			else if (n->left->data.first > key)
-				find(key, n->left);
-			else if (n->right->data.first < key)
-				find(key, n->right);
-			return NULL;
+		void insert(BiTreeNode<Key, T> *n) {
+			this->_root = this->insert(this->_root, n);
 		}
+
 
 		BiTreeNode<Key, T> *find(Key key)
 		{
-			if (_root == NULL)
-				return NULL;
-			else if (_root->data.first == key)
-				return _root;
-			else if (_root->left->data.first > key)
-				find(key, _root->left);
-			else if (_root->right->data.first < key)
-				find(key, _root->right);
-			return NULL;
+			BiTreeNode<Key, T> *tmp = find(key, _root);
+			if (tmp == NULL)
+				throw std::invalid_argument("no key found");
+			return tmp;
 		}
 
 		void erase(Key key)
@@ -228,11 +225,15 @@ class RBTree
 		void clear(BiTreeNode<Key, T> *n)
 		{
 			if (n->left != NULL)
+			{
 				clear(n->left);
-			if (n != NULL)
-				std::cout << "Data:[" << n->data.first << "," << n->data.second << "] | color:" << ((n->color == 0) ? "BLACK" : "RED") << std::endl;
-			if (n->right != NULL)
+				n->left = NULL;
+			}
+			if (n->right != NULL) {
 				clear(n->right);
+				n->right = NULL;
+			}
+			delete n;
 		}
 
 		BiTreeNode<Key, T> *createNode(Key key, T val)
