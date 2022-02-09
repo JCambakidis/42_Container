@@ -1,7 +1,0 @@
-.vscode/
-container
-MyVector.txt
-RealVector.txt
-main.o
-compiled_sources/
-.gitignore
