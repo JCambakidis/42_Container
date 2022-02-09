@@ -89,21 +89,30 @@ int main(int argc, char const *argv[])
 	tree.insert(tree.createNode(8, "123"));
 	tree.insert(tree.createNode(10, "coucou"));
 	tree.insert(tree.createNode(5, "ffff"));
-	tree.insert(tree.createNode(150, "oui"));
-	tree.insert(tree.createNode(5, "ffff"));
-	tree.insert(tree.createNode(100, "oui"));
-	tree.insert(tree.createNode(6, "oui"));
+	tree.insert(tree.createNode(156, "oui"));
+	tree.insert(tree.createNode(157, "oui"));
+	tree.insert(tree.createNode(158, "oui"));
+	tree.insert(tree.createNode(159, "oui"));
+	tree.insert(tree.createNode(154, "oui"));
+	tree.insert(tree.createNode(160, "oui"));
+
+	std::cout << "min : " << tree.find_min(tree.getRoot()->right)->data.first << std::endl;
 
 	BiTreeNode<int, std::string> *tmp;
 	try
 	{
-		tmp = tree.find(150);
+		tmp = tree.find(10);
 		std::cout << tmp->data.first << "  " << tmp->data.second << std::endl;
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 	}
+
+	tree.print_tree(tree.getRoot());
+
+	tree.erase(10);
+	std::cout << "______________________________________________" << std::endl;
 
 	tree.print_tree(tree.getRoot());
 
