@@ -17,8 +17,8 @@
  * Red Black tree is a kind of self-balancing binary search tree. 
  * Each node stores an extra bit representing "color" ("red" or "black").
  * 
- * @tparam Key - type of nodes key
- * @tparam T - type of nodes datas
+ * @tparam Key - type of node's key
+ * @tparam T - type of node's datas
  */
 
 template < class Key, class T >
@@ -28,7 +28,7 @@ class RBTree
 		BiTreeNode<Key, T> *_root;
 
 	/**
-	 * Rotate left node of x with x.
+	 * Rotate left x node.
 	 *
 	 * @param x node to rotate
 	 * @return void
@@ -56,7 +56,7 @@ class RBTree
 		}
 
 	/**
-	 * Rotate right node of x with x.
+	 * Rotate right x node.
 	 *
 	 * @param x - node to rotate
 	 * @return void
@@ -84,7 +84,7 @@ class RBTree
 		}
 
 	/**
-	 * Find the best place of node key and insert node in root tree.
+	 * Find the best place of the node "n" and insert it in tree.
 	 *
 	 * @param root - actual pointer of tree's node
 	 * @param n - node to add
