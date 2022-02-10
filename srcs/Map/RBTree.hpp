@@ -13,6 +13,14 @@
 #define BLACK 0
 #define RED 1
 
+/**
+ * Red Black tree is a kind of self-balancing binary search tree. 
+ * Each node stores an extra bit representing "color" ("red" or "black").
+ * 
+ * @tparam Key - type of nodes key
+ * @tparam T - type of nodes datas
+ */
+
 template < class Key, class T >
 class RBTree
 {
