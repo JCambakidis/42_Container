@@ -7,7 +7,7 @@
 #include "test_vector.hpp"
 
 template <class T>
-void test_vector_push_back(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file, size_t count, int seed)
+void test_vector_push_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file, size_t count, int seed)
 {
 
 	// My vector test

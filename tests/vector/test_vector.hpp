@@ -43,33 +43,33 @@ char f<char>(int n)
 #include "test_operator_overload.cpp"
 
 template <class T>
-void 	test_vector_push_back(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file, size_t count, int seed);
+void 	test_vector_push_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file, size_t count, int seed);
 
 template <class T>
-void	test_vector_pop_back(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_pop_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void 	test_vector_elements_access(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void 	test_vector_elements_access(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_resize(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_resize(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_clear(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_clear(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_insert(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_insert(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_assign(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_assign(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_erase(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_erase(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_swap(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_swap(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 template <class T>
-void	test_vector_operator_overload(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
+void	test_vector_operator_overload(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file);
 
 #endif

@@ -7,7 +7,7 @@
 #include "test_vector.hpp"
 
 template <class T>
-void test_vector_elements_access(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void test_vector_elements_access(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
  	my_file << "____________________________________________________________" << std::endl;

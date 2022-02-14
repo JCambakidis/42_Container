@@ -7,11 +7,11 @@
 #include "test_vector.hpp"
 
 template <class T>
-void	test_vector_swap(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_swap(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_swap *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 	my_vect.swap(my_vect2);

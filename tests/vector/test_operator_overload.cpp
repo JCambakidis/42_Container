@@ -8,14 +8,14 @@
 
 
 template <class T>
-void	test_vector_operator_overload_equal(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_equal(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_equal *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -70,14 +70,14 @@ void	test_vector_operator_overload_equal(vector<T> &my_vect, std::vector<T> &vec
 }
 
 template <class T>
-void	test_vector_operator_overload_not_equal(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_not_equal(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_not_equal *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -132,14 +132,14 @@ void	test_vector_operator_overload_not_equal(vector<T> &my_vect, std::vector<T> 
 }
 
 template <class T>
-void	test_vector_operator_overload_inf(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_inf(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_inf *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -194,14 +194,14 @@ void	test_vector_operator_overload_inf(vector<T> &my_vect, std::vector<T> &vect,
 }
 
 template <class T>
-void	test_vector_operator_overload_inf_equal(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_inf_equal(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_inf_equal *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -256,14 +256,14 @@ void	test_vector_operator_overload_inf_equal(vector<T> &my_vect, std::vector<T> 
 }
 
 template <class T>
-void	test_vector_operator_overload_sup(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_sup(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_sup *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -318,14 +318,14 @@ void	test_vector_operator_overload_sup(vector<T> &my_vect, std::vector<T> &vect,
 }
 
 template <class T>
-void	test_vector_operator_overload_sup_equal(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload_sup_equal(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_operator_overload_sup_equal *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 100));
-	vector<T> my_vect3;
+	ft::vector<T> my_vect3;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 
@@ -380,11 +380,11 @@ void	test_vector_operator_overload_sup_equal(vector<T> &my_vect, std::vector<T> 
 }
 
 template <class T>
-void	test_vector_external_function_swap(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_external_function_swap(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_external_function_swap *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 10; i++)
 		my_vect2.push_back(f<T>(i * 100));
 	swap(my_vect, my_vect2);
@@ -423,7 +423,7 @@ void	test_vector_external_function_swap(vector<T> &my_vect, std::vector<T> &vect
 
 
 template <class T>
-void	test_vector_operator_overload(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_operator_overload(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	my_file << "____________________________________________________________" << std::endl;
 	my_file << "___________________Operators Overload_______________________" << std::endl;

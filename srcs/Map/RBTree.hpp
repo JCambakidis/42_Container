@@ -448,30 +448,49 @@ class RBTree
 		}
 
 	/**
-	 * Insert node in tree.
+	 * Insert pair "p" in root's tree. 
 	 *
-	 * @param n - node we want to insert
-	 * @return void
+	 * @param p - pair we want to insert
+	 * @return true if pair are inserted
 	 */
 
-		void insert(BiTreeNode<Key, T> *n) {
-			_root = _insert_by_root_tree(_root, n);
+		bool insert(pair<Key, T> *p) {
+			BiTreeNode<Key, T> *tmp = _insert_by_root_tree(_root, createNode(p));
+			if (tmp == NULL)
+				return false;
+			_root = tmp;
+			return true;
 		}
 
 	/**
-	 * Find the node with key value.
+	 * Insert pair "p" with position in tree. 
+	 * Start insertion from "position".
 	 *
-	 * @param key - key of node we want to find
-	 * @throw std::invalid_argument - Throw if no node are found
-	 * @return node finded
+	 * @param p - pair we want to insert
+	 * @return true if pair are inserted
 	 */
 
-		BiTreeNode<Key, T> *find(Key key)
+		bool insert(pair<Key, T> *position, pair<Key, T> *p) {
+			BiTreeNode<Key, T> *tmp = _insert_by_root_tree(find(position->first), createNode(p));
+			if (tmp == NULL)
+				return false;
+			return true;
+		}
+
+	/**
+	 * Find pair with key value.
+	 *
+	 * @param key - key of pair we want to find
+	 * @throw std::invalid_argument - Throw if no node are found
+	 * @return pair finded
+	 */
+
+		pair<Key, T> *find(Key key)
 		{
 			BiTreeNode<Key, T> *tmp = _find_by_node(key, _root);
 			if (tmp == NULL)
 				throw std::invalid_argument("no key found");
-			return tmp;
+			return tmp->data;
 		}
 
 	/**
@@ -479,13 +498,22 @@ class RBTree
 	 * After node are deleted, replace the nodes in tree to respect red black tree conditions.
 	 * 
 	 * @param key - key of node we want to delete
-	 * @return void
+	 * @return true if key was erased
 	 */
 
-		void erase(Key key)
+		bool erase(Key key)
 		{
+			BiTreeNode<Key, T> *z;
 			// "z" the node to delete
-			BiTreeNode<Key, T> *z = find(key);
+			try
+			{
+				z = find(key);
+			}
+			catch(const std::exception& e)
+			{
+				return false;
+			}
+			
 			BiTreeNode<Key, T> *y = z;
 			BiTreeNode<Key, T> *x;
 			int y_original_color = y->color;
@@ -528,6 +556,7 @@ class RBTree
 			// Correct the tree from "x", "x" is the node from which the modification of the tree started.
 			if (y_original_color == BLACK)
 				_eraseCorrection(x);
+			return true;
 		}
 
 	/**
@@ -558,8 +587,42 @@ class RBTree
 			{
 				if (min_left != NULL && min_left->data.first < tmp->data.first)
 					tmp = min_left;
-				if (min_right != NULL && min_right->data.first <tmp->data.first)
+				if (min_right != NULL && min_right->data.first < tmp->data.first)
 					tmp = min_right;
+			}
+			return tmp;
+		}
+
+	/**
+	 * Find maximum key value of node from node n.
+	 * 
+	 * @param n - starting node, must be not NULL
+	 * @return node finded
+	 */
+
+		BiTreeNode<Key, T> *find_max(BiTreeNode<Key, T> *n)
+		{
+			BiTreeNode<Key, T> 	*max_left = NULL;
+			BiTreeNode<Key, T> 	*max_right = NULL;
+			BiTreeNode<Key, T> 	*tmp = n;
+
+			assert(n != NULL);
+
+			if (tmp->left != NULL)
+				max_left = find_max(tmp->left);
+			if (tmp->right != NULL)
+				max_right = find_max(tmp->right);
+
+			if (max_left == NULL && max_right != NULL)
+				return (tmp->data.first > max_right->data.first) ? tmp : max_right;
+			else if (max_right == NULL && max_left != NULL)
+				return (tmp->data.first > max_left->data.first) ? tmp : max_left;
+			else
+			{
+				if (max_left != NULL && max_left->data.first > tmp->data.first)
+					tmp = max_left;
+				if (max_right != NULL && max_right->data.first > tmp->data.first)
+					tmp = max_right;
 			}
 			return tmp;
 		}
@@ -585,40 +648,39 @@ class RBTree
 			delete n;
 		}
 
-	/**
-	 * Create new node object with key and data.
-	 * 
-	 * @param key - key of new node in tree
-	 * @param val - datas of new node
-	 * @return new node with key and val and without links
-	 */
-
-		BiTreeNode<Key, T> *createNode(Key key, T val)
-		{
-			pair<Key, T> p(key, val);
-			BiTreeNode<Key, T> *n = new BiTreeNode<Key, T>(NULL, p);
-			return n;
-		}
-
-	/**
-	 * Print on standard output the datas and color of nodes from node n
-	 * 
-	 * @param n - stating node
-	 * @return void
-	 */
-
-		void print_tree(BiTreeNode<Key, T> *n)
-		{
-			if (n != NULL)
-			{
-				if (n->left != NULL)
-					print_tree(n->left);
-				if (n != NULL)
-					std::cout << "Data:[" << n->data.first << "," << n->data.second << "] | color:" << ((n->color == 0) ? "BLACK" : "RED") << std::endl;
-				if (n->right != NULL)
-					print_tree(n->right);
-			}
-		}
 };
+
+/**
+ * Create new node object with key and data.
+ * 
+ * @param key - key of new node in tree
+ * @param val - datas of new node
+ * @return new node with key and val and without links
+ */
+template < class Key, class T >
+BiTreeNode<Key, T> *createNode(pair<Key, T> *p)
+{
+	return new BiTreeNode<Key, T>(NULL, p);
+}
+
+/**
+ * Print on standard output the datas and color of nodes from node n
+ * 
+ * @param n - stating node
+ * @return void
+ */
+template < class Key, class T >
+void print_tree(BiTreeNode<Key, T> *n)
+{
+	if (n != NULL)
+	{
+		if (n->left != NULL)
+			print_tree(n->left);
+		if (n != NULL)
+			std::cout << "Data:[" << n->data.first << "," << n->data.second << "] | color:" << ((n->color == 0) ? "BLACK" : "RED") << std::endl;
+		if (n->right != NULL)
+			print_tree(n->right);
+	}
+}
 
 #endif

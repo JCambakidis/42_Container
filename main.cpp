@@ -8,12 +8,13 @@
 #include "./srcs/Stack/Stack.hpp"
 #include "./tests/vector/test_vector.hpp"
 #include "./srcs/Map/RBTree.hpp"
+#include "./srcs/Map/Map.hpp"
 
 template <class T>
 void test_vector(int seed, std::ofstream &my_file, std::ofstream &file)
 {
  	size_t count = 10;
-	vector<T> my_vector_T;
+	ft::vector<T> my_vector_T;
 	std::vector<T> vector_T;
 	int status;
 
@@ -80,21 +81,10 @@ int main(int argc, char const *argv[])
 	test_vector<int>(seed, my_file, file);
 	test_vector<std::string>(seed, my_file, file);
 
-	RBTree<int, std::string> tree;
-	
-	tree.insert(tree.createNode(9, "ccou"));
-	tree.insert(tree.createNode(5, "ffff"));
-	tree.insert(tree.createNode(1, "AAA"));
-	tree.insert(tree.createNode(5, "ffff"));
-	tree.insert(tree.createNode(8, "123"));
-	tree.insert(tree.createNode(10, "coucou"));
-	tree.insert(tree.createNode(5, "ffff"));
-	tree.insert(tree.createNode(156, "oui"));
-	tree.insert(tree.createNode(157, "oui"));
-	tree.insert(tree.createNode(158, "oui"));
-	tree.insert(tree.createNode(159, "oui"));
-	tree.insert(tree.createNode(154, "oui"));
-	tree.insert(tree.createNode(160, "oui"));
+//
+
+
+	/*RBTree<int, std::string> tree;
 
 	std::cout << "min : " << tree.find_min(tree.getRoot()->right)->data.first << std::endl;
 
@@ -115,7 +105,7 @@ int main(int argc, char const *argv[])
 	std::cout << "______________________________________________" << std::endl;
 
 	tree.print_tree(tree.getRoot());
-
+*/
 	return 0;
 }
 

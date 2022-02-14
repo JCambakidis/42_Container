@@ -7,7 +7,7 @@
 #include "test_vector.hpp"
 
 template <class T>
-void	test_vector_assign_nv(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_assign_nv(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_assign_nv *************" << std::endl << std::endl;
@@ -29,11 +29,11 @@ void	test_vector_assign_nv(vector<T> &my_vect, std::vector<T> &vect, std::ofstre
 }
 
 template <class T>
-void	test_vector_assign_fl(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_assign_fl(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_assign_fl *************" << std::endl << std::endl;
-	vector<T> my_vect2;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 	my_vect.assign(my_vect2.begin(), my_vect2.end());
@@ -58,7 +58,7 @@ void	test_vector_assign_fl(vector<T> &my_vect, std::vector<T> &vect, std::ofstre
 }
 
 template <class T>
-void	test_vector_assign(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_assign(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	my_file << "____________________________________________________________" << std::endl;
  	my_file << "__________________________Assign____________________________" << std::endl;

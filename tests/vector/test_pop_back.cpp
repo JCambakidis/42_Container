@@ -7,7 +7,7 @@
 #include "test_vector.hpp"
 
 template <class T>
-void test_vector_pop_back(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void test_vector_pop_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 
 	// My vector test

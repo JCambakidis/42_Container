@@ -7,11 +7,11 @@
 #include "test_vector.hpp"
 
 template <class T>
-void	test_vector_insert_pv(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_insert_pv(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_insert_pv *************" << std::endl << std::endl;
-	typename vector<T>::iterator my_it = my_vect.begin();
+	typename ft::vector<T>::iterator my_it = my_vect.begin();
 	my_vect.insert(my_it, f<T>(5));
 	for (size_t i = 0; i < my_vect.size(); i++)
 	{
@@ -31,11 +31,11 @@ void	test_vector_insert_pv(vector<T> &my_vect, std::vector<T> &vect, std::ofstre
 }
 
 template <class T>
-void	test_vector_insert_pnv(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_insert_pnv(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_insert_pnv *************" << std::endl << std::endl;
-	typename vector<T>::iterator my_it = my_vect.begin() + 3;
+	typename ft::vector<T>::iterator my_it = my_vect.begin() + 3;
 	my_vect.insert(my_it, (size_t)30, f<T>(10));
 	for (size_t i = 0; i < my_vect.size(); i++)
 	{
@@ -55,12 +55,12 @@ void	test_vector_insert_pnv(vector<T> &my_vect, std::vector<T> &vect, std::ofstr
 }
 
 template <class T>
-void	test_vector_insert_pfl(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_insert_pfl(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_insert_pfl *************" << std::endl << std::endl;
-	typename vector<T>::iterator my_it = my_vect.begin() + 5;
-	vector<T> my_vect2;
+	typename ft::vector<T>::iterator my_it = my_vect.begin() + 5;
+	ft::vector<T> my_vect2;
 	for (size_t i = 0; i < 5; i++)
 		my_vect2.push_back(f<T>(i * 10));
 	my_vect.insert(my_it, my_vect2.begin(), my_vect2.end());
@@ -85,7 +85,7 @@ void	test_vector_insert_pfl(vector<T> &my_vect, std::vector<T> &vect, std::ofstr
 }
 
 template <class T>
-void	test_vector_insert(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_insert(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	my_file << "____________________________________________________________" << std::endl;
 	my_file << "__________________________Insert____________________________" << std::endl;

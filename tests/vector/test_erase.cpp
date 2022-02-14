@@ -7,11 +7,11 @@
 #include "test_vector.hpp"
 
 template <class T>
-void	test_vector_erase_p(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_erase_p(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_erase_p *************" << std::endl << std::endl;
-	typename vector<T>::iterator my_it = my_vect.begin() + 2;
+	typename ft::vector<T>::iterator my_it = my_vect.begin() + 2;
 	my_vect.erase(my_it);
 	for (size_t i = 0; i < my_vect.size(); i++)
 	{
@@ -31,7 +31,7 @@ void	test_vector_erase_p(vector<T> &my_vect, std::vector<T> &vect, std::ofstream
 }
 
 template <class T>
-void	test_vector_erase_fl(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_erase_fl(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	// My vector test
 	my_file << std::endl << "************* test_vector_erase_fl *************" << std::endl << std::endl;
@@ -53,7 +53,7 @@ void	test_vector_erase_fl(vector<T> &my_vect, std::vector<T> &vect, std::ofstrea
 }
 
 template <class T>
-void	test_vector_erase(vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
+void	test_vector_erase(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofstream &my_file, std::ofstream &file)
 {
 	my_file << "____________________________________________________________" << std::endl;
 	my_file << "__________________________Erase_____________________________" << std::endl;

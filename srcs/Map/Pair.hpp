@@ -79,7 +79,7 @@ struct pair
 	/**
 	 * Assign first and second pair elements with a pair "pr" values.
 	 * 
-	 * @param pr - pair address
+	 * @param pr - pair' address
 	 * @return Address of this
 	 */
 	pair& operator= (const pair& pr)

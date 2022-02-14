@@ -11,7 +11,7 @@ class bidirectional_const_iterator {
 		typedef typename A::reference reference;
 		typedef typename A::pointer pointer;
 		typedef typename A::size_type size_type;
-		typedef std::bidirectional_const_iterator_tag iterator_category;
+		typedef std::bidirectional_iterator_tag iterator_category;
 
 		bidirectional_const_iterator() : _ptr(nullptr) {}
 		bidirectional_const_iterator(const bidirectional_const_iterator &it) : _ptr(it._ptr) {}
