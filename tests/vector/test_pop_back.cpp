@@ -1,9 +1,3 @@
-#include <iostream>
-#include <string>
-#include <deque>
-#include <vector>
-#include <fstream>
-#include "../../srcs/Vector/Vector.hpp"
 #include "test_vector.hpp"
 
 template <class T>
@@ -18,7 +12,7 @@ void test_vector_pop_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofs
 	if (my_vect.size() > 0)
 	{
  		my_vect.pop_back();
- 		my_file << "size: " << my_vect.size() << " | capacity:" << my_vect.capacity() << " | front:" << my_vect.front() << " | back:" << my_vect.back() << std::endl;
+ 		show_vector_infos(my_vect, my_file);
 	}
 	else
  		my_file << "Vector empty" << std::endl;
@@ -31,7 +25,7 @@ void test_vector_pop_back(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofs
 	if (vect.size() > 0)
 	{
  		vect.pop_back();
- 		file << "size: " << vect.size() << " | capacity:" << vect.capacity() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
+ 		show_vector_infos(vect, file);
 	}
 	else
  		file << "Vector empty" << std::endl;

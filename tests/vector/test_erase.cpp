@@ -1,9 +1,3 @@
-#include <iostream>
-#include <string>
-#include <deque>
-#include <vector>
-#include <fstream>
-#include "../../srcs/Vector/Vector.hpp"
 #include "test_vector.hpp"
 
 template <class T>
@@ -17,7 +11,7 @@ void	test_vector_erase_p(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofst
 	{
 		my_file << "index:" << i << " | value:" << my_vect[i] << std::endl;
 	}
-	my_file << "size: " << my_vect.size() << " | capacity:" << my_vect.capacity() << " | front:" << my_vect.front() << " | back:" << my_vect.back() << std::endl;
+	show_vector_infos(my_vect, my_file);
 
 	// Vector test
 	file << std::endl << "************* test_vector_erase_p *************" << std::endl << std::endl;
@@ -27,7 +21,7 @@ void	test_vector_erase_p(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofst
 	{
 		file << "index:" << i << " | value:" << vect[i] << std::endl;
 	}
-	file << "size: " << vect.size() << " | capacity:" << vect.capacity() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
+	show_vector_infos(vect, file);
 }
 
 template <class T>
@@ -40,7 +34,7 @@ void	test_vector_erase_fl(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofs
 	{
 		my_file << "index:" << i << " | value:" << my_vect[i] << std::endl;
 	}
-	my_file << "size: " << my_vect.size() << " | capacity:" << my_vect.capacity() << " | front:" << my_vect.front() << " | back:" << my_vect.back() << std::endl;
+	show_vector_infos(my_vect, my_file);
 
 	// Vector test
 	file << std::endl << "************* test_vector_erase_fl *************" << std::endl << std::endl;
@@ -49,7 +43,7 @@ void	test_vector_erase_fl(ft::vector<T> &my_vect, std::vector<T> &vect, std::ofs
 	{
 		file << "index:" << i << " | value:" << vect[i] << std::endl;
 	}
-	file << "size: " << vect.size() << " | capacity:" << vect.capacity() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
+	show_vector_infos(vect, file);
 }
 
 template <class T>

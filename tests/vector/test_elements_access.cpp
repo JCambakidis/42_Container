@@ -1,9 +1,3 @@
-#include <iostream>
-#include <string>
-#include <deque>
-#include <vector>
-#include <fstream>
-#include "../../srcs/Vector/Vector.hpp"
 #include "test_vector.hpp"
 
 template <class T>

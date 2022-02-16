@@ -3,6 +3,12 @@
 
 #include <stdlib.h>
 #include <sstream>
+#include <iostream>
+#include <string>
+#include <deque>
+#include <vector>
+#include <fstream>
+#include "../../srcs/Vector/Vector.hpp"
 
 template <class T>
 T f(int n)
@@ -29,6 +35,12 @@ template <>
 char f<char>(int n)
 {
 	return n + '0';
+}
+
+template <class T>
+void show_vector_infos(T &vect, std::ofstream &file)
+{
+	file << "size: " << vect.size() << " | capacity:" << vect.capacity() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
 }
 
 #include "test_insert.cpp"

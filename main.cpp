@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <fstream>
 #include <typeinfo>
 #include <cxxabi.h>
+#include <sys/stat.h>
 #include "./srcs/Vector/Vector.hpp"
 #include "./srcs/Stack/Stack.hpp"
 #include "./tests/vector/test_vector.hpp"
+#include "./tests/map/test_map.hpp"
 #include "./srcs/Map/RBTree.hpp"
 #include "./srcs/Map/Map.hpp"
 
@@ -73,39 +76,44 @@ int main(int argc, char const *argv[])
 		seed = atoi(argv[1]);
 	else
 		seed = 4;
-	std::ofstream	my_file;
-	std::ofstream	file;
-	my_file.open("MyVector.txt");
-	file.open("RealVector.txt");
-	test_vector<char>(seed, my_file, file);
-	test_vector<int>(seed, my_file, file);
-	test_vector<std::string>(seed, my_file, file);
+	std::ofstream	my_file_vector;
+	std::ofstream	file_vector;
+	
+	mkdir("./result", 0777);
+	mkdir("./result/vector", 0777);
+	my_file_vector.open("./result/vector/MyVector.txt");
+	file_vector.open("result/vector/RealVector.txt");
+	test_vector<char>(seed, my_file_vector, file_vector);
+	test_vector<int>(seed, my_file_vector, file_vector);
+	test_vector<std::string>(seed, my_file_vector, file_vector);
 
-//
+	std::ofstream	my_file_map;
+	std::ofstream	file_map;
+	mkdir("./result/map", 0777);
+	my_file_map.open("result/map/MyMap.txt");
+	file_map.open("result/map/RealMap.txt");
 
+	std::map<const int, int> map;
+	ft::map<const int, int> my_map;
 
-	/*RBTree<int, std::string> tree;
-
-	std::cout << "min : " << tree.find_min(tree.getRoot()->right)->data.first << std::endl;
-
-	BiTreeNode<int, std::string> *tmp;
-	try
-	{
-		tmp = tree.find(10);
-		std::cout << tmp->data.first << "  " << tmp->data.second << std::endl;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	tree.print_tree(tree.getRoot());
-
-	tree.erase(10);
-	std::cout << "______________________________________________" << std::endl;
-
-	tree.print_tree(tree.getRoot());
-*/
+	srand(seed);
+ 	for (size_t i = 0; i < 10; i++)
+ 	{
+		const int first = rand() % 10;
+		int second = rand() % (10 + 5);
+		// p = std::pair<const int, int>(first, second);
+		// my_p = ft::pair<const int, int>(first, second);
+		//std::cout << &my_p << std::endl;
+		map.insert(std::make_pair(first, second));
+		my_map.insert(ft::make_pair(first, second));
+ 	}
+	print_tree(my_map.get_tree()->getRoot());
+	//show_map_infos(map, file_map);
+	std::cout << "________________________-" << std::endl;
+	show_map_infos(my_map, my_file_map);
+	std::cout << "map size :" << map.end()->second << std::endl;
+	std::cout << "my_map size :" << my_map.end()->second << std::endl;
+	//my_map.clear();
 	return 0;
 }
 
