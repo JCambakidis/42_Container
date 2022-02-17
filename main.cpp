@@ -81,11 +81,11 @@ int main(int argc, char const *argv[])
 	
 	mkdir("./result", 0777);
 	mkdir("./result/vector", 0777);
-	my_file_vector.open("./result/vector/MyVector.txt");
+	/*my_file_vector.open("./result/vector/MyVector.txt");
 	file_vector.open("result/vector/RealVector.txt");
 	test_vector<char>(seed, my_file_vector, file_vector);
 	test_vector<int>(seed, my_file_vector, file_vector);
-	test_vector<std::string>(seed, my_file_vector, file_vector);
+	test_vector<std::string>(seed, my_file_vector, file_vector);*/
 
 	std::ofstream	my_file_map;
 	std::ofstream	file_map;
@@ -93,27 +93,26 @@ int main(int argc, char const *argv[])
 	my_file_map.open("result/map/MyMap.txt");
 	file_map.open("result/map/RealMap.txt");
 
-	std::map<const int, int> map;
-	ft::map<const int, int> my_map;
 
-	srand(seed);
+	std::map<int, int> map;
+	ft::map<int, int> my_map;
+	test_map_insert(my_map, map, my_file_map, file_map, (size_t)10, seed);
+
+	/*srand(seed);
  	for (size_t i = 0; i < 10; i++)
  	{
 		const int first = rand() % 10;
 		int second = rand() % (10 + 5);
-		// p = std::pair<const int, int>(first, second);
-		// my_p = ft::pair<const int, int>(first, second);
-		//std::cout << &my_p << std::endl;
 		map.insert(std::make_pair(first, second));
 		my_map.insert(ft::make_pair(first, second));
  	}
 	print_tree(my_map.get_tree()->getRoot());
-	//show_map_infos(map, file_map);
+	show_map_infos(map, file_map);
 	std::cout << "________________________-" << std::endl;
 	show_map_infos(my_map, my_file_map);
 	std::cout << "map size :" << map.end()->second << std::endl;
 	std::cout << "my_map size :" << my_map.end()->second << std::endl;
-	//my_map.clear();
+	my_map.clear();*/
 	return 0;
 }
 

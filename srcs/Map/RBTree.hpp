@@ -23,12 +23,21 @@ namespace ft
 	 * @tparam Key - type of node's key
 	 * @tparam T - type of node's datas
 	 */
-	template < class Key, class T, class A = std::allocator< ft::BiTreeNode< ft::pair<Key, T> > > >
+	template < class Key, class T, class A = std::allocator< ft::BiTreeNode< ft::pair<const Key, T> > > >
 	class RBTree
 	{
+		public:
+
+	/**
+	 * Typedef
+	 */
+
+			typedef A allocator_type;
+			typedef typename ft::BiTreeNode< ft::pair<const Key, T> > node;
+			
 		private:
-			ft::BiTreeNode< ft::pair<Key, T> > *_root;
-			ft::BiTreeNode< ft::pair<Key, T> > *_emptyNode;
+			node *_root;
+			node *_emptyNode;
 			size_t _size;
 
 	/**
@@ -41,9 +50,9 @@ namespace ft
 		 * @param x node to rotate
 		 * @return void
 		 */
-			void _rotation_left(ft::BiTreeNode< ft::pair<Key, T> > *x)
+			void _rotation_left(node *x)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *y = x->right;
+				node *y = x->right;
 
 				x->right = y->left;
 				if (y->left != NULL)
@@ -68,9 +77,9 @@ namespace ft
 		 * @param x - node to rotate
 		 * @return void
 		 */
-			void _rotation_right(ft::BiTreeNode< ft::pair<Key, T> > *x)
+			void _rotation_right(node *x)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *y = x->left;
+				node *y = x->left;
 
 				x->left = y->right;
 				if (y->right != NULL)
@@ -100,7 +109,7 @@ namespace ft
 		 * @param n - node to add
 		 * @return noid
 		 */
-			void _recursive_insert(ft::BiTreeNode< ft::pair<Key, T> > *root, ft::BiTreeNode< ft::pair<Key, T> > *n)
+			void _recursive_insert(node *root, node *n)
 			{
 				if (root != NULL)
 				{
@@ -141,7 +150,7 @@ namespace ft
 		 * @param v - second node to swap
 		 * @return void
 		 */
-			void _swapNodes(ft::BiTreeNode< ft::pair<Key, T> > *u, ft::BiTreeNode< ft::pair<Key, T> > *v)
+			void _swapNodes(node *u, node *v)
 			{
 				if (u->parent == NULL)
 					_root = v;
@@ -162,7 +171,7 @@ namespace ft
 		 * @param n - starting node
 		 * @return findinged node
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *_find_by_node(Key key, ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *_find_by_node(Key key, node *n)
 			{
 				if (n == NULL)
 					return NULL;
@@ -182,7 +191,7 @@ namespace ft
 		 * @param n - node to insert
 		 * @return new root with node n inserted
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *_insert_by_root_tree(ft::BiTreeNode< ft::pair<Key, T> > *root, ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *_insert_by_root_tree(node *root, node *n)
 			{
 				// Insert the new node in tree, but red black tree condictions are not respected.
 				_recursive_insert(root, n);
@@ -206,10 +215,10 @@ namespace ft
 				if (_emptyNode == NULL)
 				{
 					_emptyNode = _alloc.allocate(1);
-					_alloc.construct(_emptyNode, ft::BiTreeNode< ft::pair<Key, T> >(NULL, ft::pair<Key, T>(0, 0)));
+					_alloc.construct(_emptyNode, node(NULL, ft::pair<const Key, T>(0, 0)));
 					_emptyNode->color = -1;
 				}
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = find_max(_root);
+				node *tmp = find_max(_root);
 				tmp->right = _emptyNode;
 				_emptyNode->parent = tmp;
 			}
@@ -224,7 +233,7 @@ namespace ft
 				if (_emptyNode == NULL)
 				{
 					_emptyNode = _alloc.allocate(1);
-					_alloc.construct(_emptyNode, ft::BiTreeNode< ft::pair<Key, T> >(NULL, ft::pair<Key, T>(0, 0)));
+					_alloc.construct(_emptyNode, node(NULL, ft::pair<const Key, T>(0, 0)));
 					_emptyNode->color = -1;
 				}
 				if (_emptyNode->parent != NULL)
@@ -244,10 +253,10 @@ namespace ft
 		 * @param n - starting node
 		 * @return void
 		 */
-			void _insert_repare_tree(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			void _insert_repare_tree(node *n)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *p;
-				ft::BiTreeNode< ft::pair<Key, T> > *g;
+				node *p;
+				node *g;
 				// If the parent of n is NULL, n is root and the root are always black.
 				if(parent(n) == NULL)
 					n->color = BLACK;
@@ -296,11 +305,11 @@ namespace ft
 		 * @param n - starting node
 		 * @return void
 		 */
-			void _eraseCorrection(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			void _eraseCorrection(node *n)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = n;
-				ft::BiTreeNode< ft::pair<Key, T> > *w = n;
-				ft::BiTreeNode< ft::pair<Key, T> > *p = parent(tmp);
+				node *tmp = n;
+				node *w = n;
+				node *p = parent(tmp);
 				while (tmp != _root && tmp->color == BLACK)
 				{
 					if (tmp == p->left)
@@ -392,14 +401,6 @@ namespace ft
 				replaceNullNode();
 			}
 
-		public:
-
-	/**
-	 * Typedef
-	 */
-
-			typedef A allocator_type;
-
 		private:
 
 			allocator_type _alloc;
@@ -416,7 +417,7 @@ namespace ft
 			RBTree(const allocator_type& alloc = allocator_type()): _root(NULL), _size(0), _alloc(alloc) 
 			{
 				_emptyNode = _alloc.allocate(1);
-				_alloc.construct(_emptyNode, ft::BiTreeNode< ft::pair<Key, T> >(NULL, ft::pair<Key, T>(0, 0)));
+				_alloc.construct(_emptyNode, node(NULL, ft::pair<const Key, T>(0, 0)));
 				_emptyNode->color = -1;
 			}
 
@@ -425,10 +426,10 @@ namespace ft
 		 *
 		 * @param n - new root of red black tree
 		 */
-			RBTree(ft::BiTreeNode< ft::pair<Key, T> > *n, const allocator_type& alloc = allocator_type()): _root(n), _size(0), _alloc(alloc) 
+			RBTree(node *n, const allocator_type& alloc = allocator_type()): _root(n), _size(0), _alloc(alloc) 
 			{
 				_emptyNode = _alloc.allocate(1);
-				_alloc.construct(_emptyNode, ft::BiTreeNode< ft::pair<Key, T> >(NULL, ft::pair<Key, T>(0, 0)));
+				_alloc.construct(_emptyNode, node(NULL, ft::pair<const Key, T>(0, 0)));
 				_emptyNode->color = -1;
 			}
 
@@ -440,7 +441,7 @@ namespace ft
 			RBTree(RBTree const &instance): _root(instance._root), _size(0), _alloc(instance._alloc) 
 			{
 				_emptyNode = _alloc.allocate(1);
-				_alloc.construct(_emptyNode, ft::BiTreeNode< ft::pair<Key, T> >(NULL, ft::pair<Key, T>(0, 0)));
+				_alloc.construct(_emptyNode, node(NULL, ft::pair<const Key, T>(0, 0)));
 				_emptyNode->color = -1;
 			}
 
@@ -465,7 +466,7 @@ namespace ft
 		 *
 		 * @return root of tree
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *getRoot() { return _root; }
+			node *getRoot() { return _root; }
 
 		/**
 		 * Return the size of tree
@@ -480,7 +481,7 @@ namespace ft
 		 * @param n - node whose parent we want
 		 * @return the parent of node
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *parent(ft::BiTreeNode< ft::pair<Key, T> > *n){ return n->parent; }
+			node *parent(node *n){ return n->parent; }
 
 		/**
 		 * Return the grand parent of node.
@@ -488,9 +489,9 @@ namespace ft
 		 * @param n - node whose grand parent we want
 		 * @return the grand parent of node
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *grand_parent(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *grand_parent(node *n)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *p = parent(n);
+				node *p = parent(n);
 				if (p == NULL)
 					return NULL;
 				return parent(p);
@@ -502,9 +503,9 @@ namespace ft
 		 * @param n - node whose brother we want
 		 * @return the brother of node
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *brother(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *brother(node *n)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *p = parent(n);
+				node *p = parent(n);
 				if (p == NULL)
 					return NULL;
 				else if (p->left == n)
@@ -519,10 +520,10 @@ namespace ft
 		 * @param n - node whose uncle we want
 		 * @return the uncle of node
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *uncle(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *uncle(node *n)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *p = parent(n);
-				ft::BiTreeNode< ft::pair<Key, T> > *g = grand_parent(n);
+				node *p = parent(n);
+				node *g = grand_parent(n);
 
 				if (g == NULL)
 					return NULL;
@@ -539,9 +540,25 @@ namespace ft
 		 * @param p - pair we want to insert
 		 * @return true if pair are inserted
 		 */
-			bool insert(const ft::pair<Key, T> *p) {
+			bool insert(ft::pair<const Key, T> *p) {
 				detachNullNode();
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = _insert_by_root_tree(_root, createNode(p));
+				node *tmp = _insert_by_root_tree(_root, createNode(p));
+				if (tmp == NULL)
+					return false;
+				_root = tmp;
+				replaceNullNode();
+				return true;
+			}
+
+		/**
+		 * Insert constant pair "p" in root's tree. 
+		 *
+		 * @param p - pair we want to insert
+		 * @return true if pair are inserted
+		 */
+			bool insert(const ft::pair<const Key, T> *p) {
+				detachNullNode();
+				node *tmp = _insert_by_root_tree(_root, createNode(p));
 				if (tmp == NULL)
 					return false;
 				_root = tmp;
@@ -553,12 +570,13 @@ namespace ft
 		 * Insert pair "p" with position in tree. 
 		 * Start insertion from "position".
 		 *
+		 * @param position - starting node to insert new one
 		 * @param p - pair we want to insert
 		 * @return true if pair are inserted
 		 */
-			bool insert(ft::pair<Key, T> *position, ft::pair<Key, T> *p) {
+			bool insert(ft::pair<const Key, T> position, const ft::pair<const Key, T> *p) {
 				detachNullNode();
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = _insert_by_root_tree(find(position->first), createNode(p));
+				node *tmp = _insert_by_root_tree(find(position.first), createNode(p));
 				replaceNullNode();
 				if (tmp == NULL)
 					return false;
@@ -574,7 +592,7 @@ namespace ft
 		 */
 			bool erase(Key key)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *z;
+				node *z;
 				// "z" the node to delete
 				try
 				{
@@ -587,8 +605,8 @@ namespace ft
 				
 				detachNullNode();
 
-				ft::BiTreeNode< ft::pair<Key, T> > *y = z;
-				ft::BiTreeNode< ft::pair<Key, T> > *x;
+				node *y = z;
+				node *x;
 				int y_original_color = y->color;
 				
 				// If left node of "z" is NULL, we just need to swap "z" with right value of "z"
@@ -639,7 +657,7 @@ namespace ft
 		 * @param n - starting node, must be not NULL
 		 * @return void
 		 */
-			void clear(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			void clear(node *n)
 			{
 				if (n != NULL)
 				{
@@ -679,9 +697,9 @@ namespace ft
 		 * @throw std::invalid_argument - Throw if no node are found
 		 * @return node finded
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *find(Key key)
+			node *find(Key key)
 			{
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = _find_by_node(key, _root);
+				node *tmp = _find_by_node(key, _root);
 				if (tmp == NULL)
 					throw std::invalid_argument("no key found");
 				return tmp;
@@ -693,10 +711,10 @@ namespace ft
 		 * @param n - starting node, must be not NULL
 		 * @return node finded
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *find_min(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *find_min(node *n)
 			{
 				assert(n != NULL);
-				ft::BiTreeNode< ft::pair<Key, T> > *tmp = n;
+				node *tmp = n;
 				while (tmp->left != NULL)
 					tmp = tmp->left;
 				return tmp;
@@ -708,10 +726,10 @@ namespace ft
 		 * @param n - starting node, must be not NULL
 		 * @return node finded
 		 */
-			ft::BiTreeNode< ft::pair<Key, T> > *find_max(ft::BiTreeNode< ft::pair<Key, T> > *n)
+			node *find_max(node *n)
 			{
 				assert(n != NULL);
-				ft::BiTreeNode< ft::pair<Key, T> > 	*tmp = n;
+				node 	*tmp = n;
 				while (tmp->right != NULL && tmp->right->color != -1)
 					tmp = tmp->right;
 				return tmp;
@@ -722,10 +740,10 @@ namespace ft
 		 * @param p - data of new node
 		 * @return pointer of node created. No linked Node with key and val
 		 */
-		ft::BiTreeNode< ft::pair<Key, T> > *createNode(const ft::pair<Key, T> *p)
+		node *createNode(const ft::pair<const Key, T> *p)
 		{
-			ft::BiTreeNode< ft::pair<Key, T> > *n = _alloc.allocate(1);
-			_alloc.construct(n, ft::BiTreeNode< ft::pair<Key, T> >(NULL, *p));
+			node *n = _alloc.allocate(1);
+			_alloc.construct(n, node(NULL, *p));
 			return n;
 		}
 	};
@@ -738,7 +756,7 @@ namespace ft
 	 * @return void
 	 */
 	template < class Key, class T >
-	void print_tree(ft::BiTreeNode< ft::pair<Key, T> > *n)
+	void print_tree(ft::BiTreeNode< ft::pair<const Key, T> > *n)
 	{
 		if (n != NULL)
 		{

@@ -29,7 +29,7 @@ namespace ft
 	 * @tparam A - allocator template of pair in standard library
 	 */
 
-	template < class Key, class T, class Compare = std::less<Key>, class A = std::allocator< ft::pair<const Key,T> > >
+	template < class Key, class T, class Compare = std::less<Key>, class A = std::allocator< ft::pair<const Key, T> > >
 	class map
 	{
 		public:
@@ -42,18 +42,18 @@ namespace ft
 			typedef T mapped_type;
 			typedef Compare key_compare;
 			typedef A allocator_type;
-			typedef typename A::template rebind<ft::RBTree<Key, T> >::other new_alloc;
+			typedef typename A::template rebind< ft::RBTree<Key, T> >::other new_alloc;
+			typedef typename ft::BiTreeNode< ft::pair<const Key, T> > node;
 			typedef typename A::value_type value_type; 
 			typedef typename A::reference reference;
 			typedef typename A::const_reference const_reference;
 			typedef typename A::pointer pointer;
 			typedef typename A::difference_type difference_type;
 			typedef typename A::size_type size_type;
-
-			typedef reverseIterator<value_type, A> reverse_iterator;
-			typedef reverseConstIterator<value_type, A> const_reverse_iterator;
-			typedef bidirectional_iterator<value_type, A> iterator;
-			typedef bidirectional_const_iterator<value_type, A> const_iterator;
+			typedef reverseIterator<node> reverse_iterator;
+			typedef reverseConstIterator<node> const_reverse_iterator;
+			typedef bidirectional_iterator<node> iterator;
+			typedef bidirectional_const_iterator<node> const_iterator;
 
 	/**
 	 * Intern Class
@@ -310,13 +310,13 @@ namespace ft
 		/**
 		 * Insert pair in tree at position.
 		 * 
-		 * @param position - iterator of pair, node position to start insertion
+		 * @param position - iterator of BiTreeNode, node position to start insertion
 		 * @param val - datas of new node - value_type is pair<key_type, T>
 		 * @return pair insered
 		 */
 			iterator insert (iterator position, const value_type& val) const
 			{
-				_tree->insert(position, val);
+				_tree->insert(*position, &val);
 				return _tree->find(val.first);
 			}
 			
@@ -332,7 +332,7 @@ namespace ft
 			void insert (InputIterator first, InputIterator last) const
 			{
 				for ( ;first != last; first++)
-					_tree->insert(first);
+					_tree->insert(*first);
 			}
 
 		/**
@@ -343,7 +343,7 @@ namespace ft
 		 */
 			void erase (iterator position) const
 			{
-				ft::pair<Key, T> tmp = position;
+				ft::pair<const Key, T> tmp = position;
 				_tree->erase(tmp.first);
 			}
 
@@ -394,10 +394,13 @@ namespace ft
 		 */
 			void clear()
 			{
-				_tree->clear(_tree->getRoot());
-				_alloc.destroy(_tree);
-				_alloc.deallocate(_tree, 1);
-				_tree = NULL;
+				if (_tree != NULL)
+				{
+					_tree->clear(_tree->getRoot());
+					_alloc.destroy(_tree);
+					_alloc.deallocate(_tree, 1);
+					_tree = NULL;
+				}
 			}
 
 	/**

@@ -20,10 +20,15 @@ namespace ft
 		BiTreeNode *right;
 		int color;
 
+		typedef Pair& reference;
+		typedef Pair* pointer;
+
 		/**
 		 * Create node with empty key and data.
 		 */
 		BiTreeNode(void) : data(Pair()) {}
+
+		BiTreeNode(BiTreeNode const &instance): parent(instance.parent), data(instance.data), left(instance.left), right(instance.right), color(instance.color){}
 
 		/**
 		 * Create node with parent and datas.

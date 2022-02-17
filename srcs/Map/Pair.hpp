@@ -80,7 +80,7 @@ namespace ft
 	 */
 
 		/**
-		 * Assign first and second pair elements with a pair "pr" values.
+		 * Copy pair "pr".
 		 * 
 		 * @param pr - pair' address
 		 * @return Address of this
