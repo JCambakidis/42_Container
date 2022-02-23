@@ -58,7 +58,7 @@ void	test_map_erase_first_last(Map &map, std::ofstream &file)
 		}
 	}
 	typename Map::iterator it_2 = it;
-	if (map.size() > 0 && it_1 != it_2)
+	if (map.size() > 0 && it_1 != it_2 && it != it_2)
 	{
 		it_2--;
 		if (it_1 != it_2)

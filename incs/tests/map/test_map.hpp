@@ -15,6 +15,8 @@ size_t ERASE_COUNT = 1;
 template <class Map>
 void show_map_infos(Map &map, std::ofstream &file)
 {
+	typename Map::iterator ittt = map.end();
+	(void)ittt;
 	for(typename Map::iterator it = map.begin(); it != map.end(); it++)
 		file << "key:" << it->first << " | value:" << it->second << " | size:" << map.size() << std::endl;
 }

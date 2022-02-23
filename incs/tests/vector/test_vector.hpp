@@ -39,7 +39,7 @@ char f<char>(int n)
 template <class Vector>
 void show_vector_infos(Vector &vect, std::ofstream &file)
 {
-	file << "size: " << vect.size() << " | capacity:" << vect.capacity() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
+	file << "size: " << vect.size() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
 }
 
 #include "test_insert.hpp"
@@ -54,9 +54,8 @@ void show_vector_infos(Vector &vect, std::ofstream &file)
 #include "test_operator_overload.hpp"
 
 template <class Vector>
-void test_vector(int seed, std::ofstream &file)
+void test_vector(size_t count, int seed, std::ofstream &file)
 {
- 	size_t count = 10;
 	Vector vector;
 	int status;
 	char *type = abi::__cxa_demangle(typeid(typename Vector::value_type).name(), 0, 0, &status);

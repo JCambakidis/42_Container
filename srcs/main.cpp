@@ -16,7 +16,8 @@ int main(int argc, char const *argv[])
 	if (argc == 2)
 		seed = atoi(argv[1]);
 	else
-		seed = 1;
+		seed = 199;
+
 	std::ofstream	my_file_vector;
 	std::ofstream	file_vector;
 	
@@ -24,16 +25,19 @@ int main(int argc, char const *argv[])
 	mkdir("./result/vector", 0777);
 	my_file_vector.open("./result/vector/MyVector.txt");
 	file_vector.open("result/vector/RealVector.txt");
-	test_vector<std::vector<int> >(seed, file_vector);
-	test_vector<ft::vector<int> >(seed, my_file_vector);
+	test_vector<std::vector<int> >(100, seed, file_vector);
+	test_vector<ft::vector<int> >(100, seed, my_file_vector);
+	test_vector<std::vector<char> >(100, seed, file_vector);
+	test_vector<ft::vector<char> >(100, seed, my_file_vector);
 
-	std::ofstream	my_file_map;
+/*	std::ofstream	my_file_map;
 	std::ofstream	file_map;
 	mkdir("./result/map", 0777);
 	my_file_map.open("result/map/MyMap.txt");
 	file_map.open("result/map/RealMap.txt");
 	test_map<std::map<int, int> >(100, seed, file_map);
-	test_map<ft::map<int, int> >(100, seed, my_file_map);
+	test_map<ft::map<int, int> >(100, seed, my_file_map);*/
+	
 	return 0;
 }
 

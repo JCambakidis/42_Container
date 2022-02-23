@@ -294,6 +294,13 @@ namespace ft
 					_alloc.deallocate(tmp, _capacity);
 					_size = n;
 				}
+				else if (_size < n)
+				{
+					// Add new values in array
+					for (size_t i = _size; i < n; i++)
+						_alloc.construct(&_datas[i], val);
+					_size = n;
+				}
 			}
 
 		/**

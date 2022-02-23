@@ -11,8 +11,8 @@
 #include "RBTree.hpp"
 #include "../Iterators/Bidirectional_iterator.hpp"
 #include "../Iterators/Bidirectional_Const_iterator.hpp"
-#include "../Iterators/reverseIterator.hpp"
-#include "../Iterators/reverseConstIterator.hpp"
+#include "../Iterators/map_reverseIterator.hpp"
+#include "../Iterators/map_reverseConstIterator.hpp"
 
 namespace ft
 {
@@ -50,8 +50,8 @@ namespace ft
 			typedef typename A::pointer pointer;
 			typedef typename A::difference_type difference_type;
 			typedef typename A::size_type size_type;
-			typedef reverseIterator<node> reverse_iterator;
-			typedef reverseConstIterator<node> const_reverse_iterator;
+			typedef map_reverseIterator<node> reverse_iterator;
+			typedef map_reverseConstIterator<node> const_reverse_iterator;
 			typedef bidirectional_iterator<node> iterator;
 			typedef bidirectional_const_iterator<node> const_iterator;
 

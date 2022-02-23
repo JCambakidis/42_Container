@@ -55,8 +55,8 @@ void	test_map_insert(Map &map, std::ofstream &file, int seed)
  	file << "____________________________________________________________" << std::endl;
 
 	test_map_insert_value_type(map, file, seed);
-	test_map_insert_position(map, file, seed);
-	test_map_insert_first_last(map, file, seed);
+	//test_map_insert_position(map, file, seed);
+	//test_map_insert_first_last(map, file, seed);
 }
 
 #endif

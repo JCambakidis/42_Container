@@ -1,30 +1,31 @@
-#ifndef BIDIRECTIONAL_ITERATOR_HPP
-# define BIDIRECTIONAL_ITERATOR_HPP
+#ifndef MAP_REVERSECONSTITERATOR_HPP
+# define MAP_REVERSECONSTITERATOR_HPP
 
 # include <memory>
 # include "../Map/Tree_node.hpp"
-
 template <class Node>
-class bidirectional_iterator { 
+class map_reverseConstIterator
+{
 	public:
+
 		typedef typename Node::reference reference;
 		typedef typename Node::pointer pointer;
 		typedef std::bidirectional_iterator_tag iterator_category;
 
-		bidirectional_iterator() : _node(nullptr) {}
-		bidirectional_iterator(const bidirectional_iterator &it) : _node(it._node) {}
-		bidirectional_iterator(Node *n): _node(n) {}
-		~bidirectional_iterator(){}
+		map_reverseConstIterator(void) : _node(nullptr) {}
+		map_reverseConstIterator(map_reverseConstIterator const &instance) : _node(instance._node) {}
+		map_reverseConstIterator(Node *n) : _node(n) {}
+		~map_reverseConstIterator(void){}
 
 		Node *get_node() {return _node;}
 
-		bidirectional_iterator& operator=(const bidirectional_iterator &it)
+		map_reverseConstIterator& operator=(const map_reverseConstIterator &it)
 		{
 			_node = it._node;
 			return *this;
 		}
 
-		bool operator==(const bidirectional_iterator &it) const
+		bool operator==(const map_reverseConstIterator &it) const
 		{
 			if(_node != NULL && it._node != NULL)
 			{				
@@ -35,7 +36,7 @@ class bidirectional_iterator {
 			return false;
 		}
 
-		bool operator!=(const bidirectional_iterator &it) const
+		bool operator!=(const map_reverseConstIterator &it) const
 		{
 			if(_node != NULL && it._node != NULL)
 			{
@@ -46,73 +47,7 @@ class bidirectional_iterator {
 			return false;
 		}
 
-		bidirectional_iterator& operator++()
-		{
-			Node *tmp = _node;
-		
-			if (tmp->color == -1)
-				return *this;
-			if (tmp->right == NULL)
-			{
-				if (tmp == tmp->parent->right)
-				{
-					while (tmp->parent != NULL && tmp == tmp->parent->right)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->right;
-						return *this;
-					}
-					tmp = tmp->parent;
-				}
-				else
-					tmp = tmp->parent;
-			}
-			else if (tmp->right != NULL)
-			{
-				tmp = tmp->right;
-				while (tmp->left != NULL && tmp->color != -1)
-					tmp = tmp->left;
-			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
-
-		bidirectional_iterator operator++(int)
-		{
-			Node *tmp = _node;
-		
-			if (tmp->color == -1)
-				return *this;
-			if (tmp->right == NULL)
-			{
-				if (tmp == tmp->parent->right)
-				{
-					while (tmp->parent != NULL && tmp == tmp->parent->right)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->right;
-						return *this;
-					}
-					tmp = tmp->parent;
-				}
-				else
-					tmp = tmp->parent;
-			}
-			else if (tmp->right != NULL)
-			{
-				tmp = tmp->right;
-				while (tmp->left != NULL && tmp->color != -1)
-					tmp = tmp->left;
-			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
-
-		bidirectional_iterator& operator--()
+		map_reverseConstIterator& operator++()
 		{
 			Node *tmp = _node;
 			if(tmp->color == -1 && tmp->parent == NULL)
@@ -144,9 +79,11 @@ class bidirectional_iterator {
 			return *this;
 		}
 
-		bidirectional_iterator operator--(int)
+		map_reverseConstIterator operator++(int)
 		{
 			Node *tmp = _node;
+			if(tmp->color == -1 && tmp->parent == NULL)
+				return *this;
 			if (tmp->left == NULL && tmp->parent != NULL)
 			{
 				if (tmp == tmp->parent->left)
@@ -174,6 +111,72 @@ class bidirectional_iterator {
 			return *this;
 		}
 
+		map_reverseConstIterator& operator--()
+		{
+			Node *tmp = _node;
+		
+			if (tmp->color == -1)
+				return *this;
+			if (tmp->right == NULL)
+			{
+				if (tmp == tmp->parent->right)
+				{
+					while (tmp->parent != NULL && tmp == tmp->parent->right)
+						tmp = tmp->parent;
+					if (tmp->parent == NULL)
+					{
+						_node = _node->right;
+						return *this;
+					}
+					tmp = tmp->parent;
+				}
+				else
+					tmp = tmp->parent;
+			}
+			else if (tmp->right != NULL)
+			{
+				tmp = tmp->right;
+				while (tmp->left != NULL && tmp->color != -1)
+					tmp = tmp->left;
+			}
+			if (tmp != NULL)
+				_node = tmp;
+			return *this;
+		}
+
+		map_reverseConstIterator operator--(int)
+		{
+			Node *tmp = _node;
+		
+			if (tmp->color == -1)
+				return *this;
+			if (tmp->right == NULL)
+			{
+				if (tmp == tmp->parent->right)
+				{
+					while (tmp->parent != NULL && tmp == tmp->parent->right)
+						tmp = tmp->parent;
+					if (tmp->parent == NULL)
+					{
+						_node = _node->right;
+						return *this;
+					}
+					tmp = tmp->parent;
+				}
+				else
+					tmp = tmp->parent;
+			}
+			else if (tmp->right != NULL)
+			{
+				tmp = tmp->right;
+				while (tmp->left != NULL && tmp->color != -1)
+					tmp = tmp->left;
+			}
+			if (tmp != NULL)
+				_node = tmp;
+			return *this;
+		}
+
 		reference operator*() const
 		{
 			return _node->data;
@@ -184,8 +187,10 @@ class bidirectional_iterator {
 			return &_node->data;
 		}
 
+
 	private:
 		Node *_node;
+
 };
 
 #endif
