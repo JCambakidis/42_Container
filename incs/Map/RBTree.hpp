@@ -45,7 +45,7 @@ namespace ft
 	 */
 
 		/**
-		 * Rotate left x node.
+		 * Rotate left "x" node.
 		 *
 		 * @param x node to rotate
 		 * @return void
@@ -72,7 +72,7 @@ namespace ft
 			}
 
 		/**
-		 * Rotate right x node.
+		 * Rotate right "x" node.
 		 *
 		 * @param x - node to rotate
 		 * @return void
@@ -113,7 +113,6 @@ namespace ft
 			{
 				if (root != NULL)
 				{
-					// If the key of "n" are smaller than "root" we search in left of node pointed by "root".
 					if (n->data.first < root->data.first)
 					{
 						if (root->left != NULL)
@@ -124,7 +123,6 @@ namespace ft
 						else
 							root->left = n;
 					}
-					// If the key of "n" are bigger or equal than "root" we search in right of node pointed by "root".
 					else
 					{
 						if (root->right != NULL)
@@ -144,10 +142,10 @@ namespace ft
 			}
 
 		/**
-		 * Swap two nodes in tree, u and v.
+		 * Swap two nodes in tree.
 		 *
-		 * @param u - first node to swap
-		 * @param v - second node to swap
+		 * @param u - first node
+		 * @param v - second node
 		 * @return void
 		 */
 			void _swapNodes(node *u, node *v)
@@ -166,11 +164,11 @@ namespace ft
 			}
 
 		/**
-		 * Find the node with key number from n.
+		 * Find the node with "key" number from "n".
 		 *
-		 * @param key - the key to find
+		 * @param key - Key to search for
 		 * @param n - starting node
-		 * @return findinged node
+		 * @return found node
 		 */
 			node *_find_by_node(Key key, node *n)
 			{
@@ -186,11 +184,11 @@ namespace ft
 			}
 
 		/**
-		 * Insert in root of red black tree the node n recurcively and repare it to respect red black tree conditions.
+		 * Insert in "root" the node "n" and balance the tree.
 		 *
-		 * @param root - root of tree in whitch we want to insert the node
+		 * @param root - root in whitch we want to insert the node
 		 * @param n - node to insert
-		 * @return new root with node n inserted
+		 * @return new root
 		 */
 			node *_insert_by_root_tree(node *root, node *n)
 			{
@@ -207,7 +205,7 @@ namespace ft
 			}
 
 		/**
-		 * Place end node to the end of tree
+		 * Replace end node to the end of the tree
 		 * 
 		 * @return void
 		 */
@@ -258,7 +256,7 @@ namespace ft
 	 */
 
 		/**
-		 * Repare tree after _recursive_insert() to respect Red Black tree conditions.
+		 * Balance tree after insert node.
 		 *
 		 * @param n - starting node
 		 * @return void
@@ -267,18 +265,15 @@ namespace ft
 			{
 				node *p;
 				node *g;
-				// If the parent of n is NULL, n is root and the root are always black.
+
 				if(parent(n) == NULL || parent(n) == _emptyNode)
 				{
 					if (parent(n) == _emptyNode)
 						_root = n;
 					n->color = BLACK;
 				}
-				// If the parent of n is black, we do nothing.
 				else if (parent(n)->color == BLACK)
 					return;
-				// If the uncle is red, the uncle and parent is change to black and the grand parent is change to red
-				// to respect the balance of colors in red black tree.
 				else if (uncle(n) != NULL && uncle(n)->color == RED)
 				{
 					parent(n)->color = BLACK;
@@ -291,7 +286,7 @@ namespace ft
 				{
 					p = parent(n);
 					g = grand_parent(n);
-					// If parent is red, we need to rotate parent node to balance the tree and change the colors of nodes
+
 					if(g->left != NULL && g->left->right != NULL && n == g->left->right)
 					{
 						_rotation_left(p);
@@ -314,7 +309,7 @@ namespace ft
 			}
 
 		/**
-		 * Repare tree after erase to respect red black tree conditions.
+		 * Balance tree after erase.
 		 *
 		 * @param n - starting node
 		 * @return void
@@ -328,11 +323,8 @@ namespace ft
 				{
 					if (tmp == p->left)
 					{
-						// "w" is the brother of "tmp".
 						w = p->right;
-						// If "w" is red, we need to change his color in black and "p" in red.
-						// Rotate "p" to balance the color and key value in left of "p". "tmp" is the new parent of "p".
-						// Replace "w" to the right of "p".
+
 						if (w != NULL && w->color == RED)
 						{
 							w->color = BLACK;
@@ -342,7 +334,6 @@ namespace ft
 						}
 						if (w != NULL)
 						{
-							// If left and right of "w" is black, we change the color of "w" to respect color balance.
 							if ((w->left == NULL || w->left->color == BLACK) && (w->right == NULL || w->right->color == BLACK))
 							{
 								w->color = RED;
@@ -350,9 +341,6 @@ namespace ft
 							}
 							else
 							{
-								// If "w" right is black, we need to change left color in black and "w" in red.
-								// Rotate "w" to balance the color and keys values in right link of "w".
-								// Replace "w" to the right of "p" after rotation.
 								if (w->right->color == BLACK)
 								{
 									w->left->color = BLACK;
@@ -360,9 +348,7 @@ namespace ft
 									_rotation_right(w);
 									w = p->right;
 								}
-								// If "w" color is black, "p" color is red, to respect the color conditions of tree,
-								// we change the colors of "w", "p" and right of "w".
-								// Rotate "p" to balance the lefts values of "p", to respect colors and keys conditions of tree.
+
 								w->color = p->color;
 								p->color = BLACK;
 								w->right->color = BLACK;
@@ -373,11 +359,9 @@ namespace ft
 					}
 					else
 					{
-						// "w" is the brother of "tmp".
+
 						w = p->left;
-						// If "w" is red, we need to change his color in black and "p" in red.
-						// Rotate "p" to balance the color and key value right of "p". "tmp" is the new parent of "p".
-						// Replace "w" to the left of "p".
+
 						if (w != NULL && w->color == RED)
 						{
 							w->color = BLACK;
@@ -394,9 +378,6 @@ namespace ft
 							}
 							else
 							{
-								// If "w" left is black, we need to change right color in black and "w" in red.
-								// Rotate "w" to balance the color and keys values in left link of "w".
-								// Replace "w" to the left of "p" after rotation.
 								if (w->left != NULL && w->left->color == BLACK)
 								{
 									if (w->right != NULL)
@@ -405,9 +386,7 @@ namespace ft
 									_rotation_left(w);
 									w = p->left;
 								}
-								// If "w" color is black, "p" color is red, to respect the color conditions of tree,
-								// we change the colors of "w", "p" and left of "w".
-								// Rotate "p" to balance the rights values of "p", to respect colors and keys conditions of tree.
+
 								w->color = p->color;
 								p->color = BLACK;
 								if (w->left != NULL)
@@ -416,7 +395,6 @@ namespace ft
 								tmp = _root;
 							}
 						}
-						// If left and right of "w" is black, we change the color of "w" to respect color balance.
 					}
 				}
 				if (tmp->color != -1)
@@ -430,7 +408,7 @@ namespace ft
 		public:
 
 	/**
-	 * Constructor
+	 * Constructors
 	 */
 
 		/**
@@ -444,7 +422,7 @@ namespace ft
 			}
 
 		/**
-		 * Construct red black tree whitch n is root.
+		 * Construct red black tree with "n" as root.
 		 *
 		 * @param n - new root of red black tree
 		 */
@@ -456,9 +434,9 @@ namespace ft
 			}
 
 		/**
-		 * Construct red black tree whitch root of instance.
+		 * Construct copy of "instance"
 		 *
-		 * @param instance - instance of tree which is copied
+		 * @param instance - reference of tree
 		 */
 			RBTree(RBTree const &instance): _root(instance._root), _size(0), _alloc(instance._alloc) 
 			{
@@ -470,12 +448,12 @@ namespace ft
 		/**
 		 * Assign rhs's root in tree root.
 		 *
-		 * @param rhs - address of red black tree where root is assigned
+		 * @param rhs - reference of tree
 		 */
 			RBTree &operator=(RBTree const &rhs) { _root = rhs._root; _alloc = rhs._alloc; return *this; }
 
 		/**
-		 * Destruct red black tree and delete all nodes to free the memory.
+		 * Destruct tree and free memory.
 		 */
 			~RBTree(void) {clear(_root); _root = NULL; }
 
@@ -484,39 +462,39 @@ namespace ft
 	 */
 
 		/**
-		 * Return the root of red black tree.
+		 * Return root of tree.
 		 *
 		 * @return root of tree
 		 */
 			node *getRoot() { return _root; }
 
 		/**
-		 * Return the empty node.
+		 * Return empty node.
 		 * 
 		 * @return emptyNode
 		 */
 			node *getEmptyNode() { return _emptyNode; }
 
 		/**
-		 * Return the size of tree
+		 * Return size of tree
 		 * 
 		 * @return size of tree
 		 */
 			size_t get_size() { return _size; }
 
 		/**
-		 * Return the parent of node.
+		 * Return parent of node "n".
 		 *
-		 * @param n - node whose parent we want
-		 * @return the parent of node
+		 * @param n - node pointer
+		 * @return parent of node
 		 */
 			node *parent(node *n){ return n->parent; }
 
 		/**
-		 * Return the grand parent of node.
+		 * Return grand parent of node "n".
 		 *
-		 * @param n - node whose grand parent we want
-		 * @return the grand parent of node
+		 * @param n - node pointer
+		 * @return grand parent of node
 		 */
 			node *grand_parent(node *n)
 			{
@@ -527,10 +505,10 @@ namespace ft
 			}
 
 		/**
-		 * Return the brother of node.
+		 * Return brother of node "n".
 		 *
-		 * @param n - node whose brother we want
-		 * @return the brother of node
+		 * @param n - node pointer
+		 * @return brother of node
 		 */
 			node *brother(node *n)
 			{
@@ -544,10 +522,10 @@ namespace ft
 			}
 
 		/**
-		 * Return the uncle of node.
+		 * Return uncle of node "n".
 		 *
-		 * @param n - node whose uncle we want
-		 * @return the uncle of node
+		 * @param n - node pointer
+		 * @return uncle of node
 		 */
 			node *uncle(node *n)
 			{
@@ -564,10 +542,10 @@ namespace ft
 	 */
 
 		/**
-		 * Insert pair "p" in root's tree. 
+		 * Insert pair "p" in root. 
 		 *
-		 * @param p - pair we want to insert
-		 * @return true if pair are inserted
+		 * @param p - pair pointer
+		 * @return true if pair inserted
 		 */
 			bool insert(ft::pair<const Key, T> *p) {
 				_detachNullNode();
@@ -590,10 +568,10 @@ namespace ft
 			}
 
 		/**
-		 * Insert constant pair "p" in root's tree. 
+		 * Insert constant pair "p" in root. 
 		 *
-		 * @param p - pair we want to insert
-		 * @return true if pair are inserted
+		 * @param p - const pair pointer
+		 * @return true if pair inserted
 		 */
 			bool insert(const ft::pair<const Key, T> *p) {
 				_detachNullNode();
@@ -616,12 +594,12 @@ namespace ft
 			}
 
 		/**
-		 * Insert pair "p" with position in tree. 
+		 * Insert pair "p" at position in tree. 
 		 * Start insertion from "position".
 		 *
-		 * @param position - starting node to insert new one
-		 * @param p - pair we want to insert
-		 * @return true if pair are inserted
+		 * @param position - pair
+		 * @param p - pair pointer
+		 * @return node inserted
 		 */
 			node *insert(ft::pair<const Key, T> position, const ft::pair<const Key, T> *p) {
 				_detachNullNode();
@@ -631,16 +609,15 @@ namespace ft
 			}
 
 		/**
-		 * Delete the node with key in tree.
-		 * After node are deleted, replace the nodes in tree to respect red black tree conditions.
+		 * Delete node with "key".
+		 * After node are deleted, balance tree.
 		 * 
-		 * @param key - key of node we want to delete
-		 * @return true if key was erased
+		 * @param key - key of node
+		 * @return true if key erased
 		 */
 			bool erase(Key key)
 			{
 				node *z;
-				// "z" the node to delete
 				z = find(key);
 				node *y = z;
 				node *x;
@@ -648,13 +625,11 @@ namespace ft
 				if (z == _emptyNode || z == NULL)
 					return false;
 				int y_original_color = y->color;
-				// If left node of "z" is NULL, we just need to swap "z" with right value of "z"
 				if (z->left == NULL)
 				{
 					x = z->right;
 					_swapNodes(z, z->right);
 				}
-				// If right node of "z" is NULL, we just need to swap "z" with left value of "z"
 				else if (z->right == NULL || z->right == _emptyNode)
 				{
 					x = z->left;
@@ -662,11 +637,9 @@ namespace ft
 				}
 				else
 				{
-					// Find the next value of "z" to replace it
 					y = find_min(z->right);
 					y_original_color = y->color;
 					x = y->right;
-					// Swap node "z" and "y"
 					if (x != NULL && y->parent == z)
 						x->parent = y;
 					else if (z->right != NULL)
@@ -693,7 +666,6 @@ namespace ft
 					y->left = NULL;
 					y->right = NULL;
 				}
-				// Correct the tree from "x", "x" is the node from which the modification of the tree started.
 				if (y_original_color == BLACK && x != NULL)
 					_eraseCorrection(x);
 				_detachNullNode();
@@ -702,9 +674,9 @@ namespace ft
 			}
 
 		/**
-		 * Delete all nodes from n in tree to free the memory.
+		 * Delete all nodes from "n" and free memory.
 		 * 
-		 * @param n - starting node, must be not NULL
+		 * @param n - node pointer, must not be NULL
 		 * @return void
 		 */
 			void clear(node *n)
@@ -741,9 +713,9 @@ namespace ft
 	 */
 
 		/**
-		 * Find node with key value.
+		 * Find node with "key" value.
 		 *
-		 * @param key - key of pair we want to find
+		 * @param key - key of pair
 		 * @throw std::invalid_argument - Throw if no node are found
 		 * @return node finded
 		 */
@@ -754,9 +726,9 @@ namespace ft
 			}
 
 		/**
-		 * Find minimum key value of node from node n.
+		 * Find minimum key value from node "n".
 		 * 
-		 * @param n - starting node, must be not NULL
+		 * @param n - node pointer, must not be NULL
 		 * @return node finded
 		 */
 			node *find_min(node *n)
@@ -769,9 +741,9 @@ namespace ft
 			}
 
 		/**
-		 * Find maximum key value of node from node n.
+		 * Find maximum key value from node "n".
 		 * 
-		 * @param n - starting node, must be not NULL
+		 * @param n - node pointer, must not be NULL
 		 * @return node finded
 		 */
 			node *find_max(node *n)
@@ -782,11 +754,12 @@ namespace ft
 					tmp = tmp->right;
 				return tmp;
 			}
+
 		/**
-		 * Create new node object with key and data.
+		 * Create new node.
 		 * 
-		 * @param p - data of new node
-		 * @return pointer of node created. No linked Node with key and val
+		 * @param p - pair pointer
+		 * @return node created. No linked Node with key and val
 		 */
 		node *createNode(const ft::pair<const Key, T> *p)
 		{
@@ -798,9 +771,9 @@ namespace ft
 
 
 	/**
-	 * Print on standard output the datas and color of nodes from node n
+	 * Print on standard output datas and color of nodes from "n"
 	 * 
-	 * @param n - stating node
+	 * @param n - node pointer
 	 * @return void
 	 */
 	template < class Key, class T >

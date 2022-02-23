@@ -29,21 +29,21 @@ namespace ft
 			typedef typename Container::const_reference const_reference;
 
 	/**
-	 * Constructor
+	 * Constructors
 	 */
 
 		/**
 		 * Create stack with default container.
 		 * 
-		 * @param cont - address of container
+		 * @param cont - reference of container
 		 */
 			explicit stack(const container_type& cont = container_type()) : _c(cont) {}
 
 		/**
 		 * Assign other stack to this stack
 		 * 
-		 * @param rhs - address of stack
-		 * @return - address of this stack
+		 * @param rhs - reference of stack
+		 * @return - pointer of this
 		 */
 			stack &operator=(stack const &rhs)
 			{
@@ -116,7 +116,7 @@ namespace ft
 			}
 
 		/**
-		 * Delete the last stack's element.
+		 * Delete the last stack element.
 		 * 
 		 * @return void
 		 */
@@ -132,8 +132,8 @@ namespace ft
 		/**
 		 * Overload of "==" operator
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if the two stacks are equal
 		 */
 			friend bool operator==( const stack& lhs, const stack& rhs ) 
@@ -144,8 +144,8 @@ namespace ft
 		/**
 		 * Overload of "!=" operator
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if the two stacks are not equal
 		 */
 			friend bool operator!=( const stack& lhs, const stack& rhs )
@@ -157,8 +157,8 @@ namespace ft
 		/**
 		 * Overload of "<" operator.
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if "lhs" are smaller than "rhs"
 		 */
 			friend bool operator<( const stack& lhs, const stack& rhs )
@@ -169,8 +169,8 @@ namespace ft
 		/**
 		 * Overload of "<=" operator.
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if "lhs" are smaller than "rhs" or equal
 		 */
 			friend bool operator<=( const stack& lhs, const stack& rhs )
@@ -181,8 +181,8 @@ namespace ft
 		/**
 		 * Overload of ">" operator.
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if "lhs" are bigger than "rhs"
 		 */
 			friend bool operator>( const stack& lhs, const stack& rhs )
@@ -193,8 +193,8 @@ namespace ft
 		/**
 		 * Overload of ">=" operator.
 		 * 
-		 * @param lhs - stack's address
-		 * @param rhs - stack's address
+		 * @param lhs - stack reference
+		 * @param rhs - stack reference
 		 * @return true if "lhs" are bigger than "rhs" or equal
 		 */
 			friend bool operator>=( const stack& lhs, const stack& rhs )

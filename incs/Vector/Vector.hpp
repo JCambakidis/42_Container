@@ -14,9 +14,9 @@ namespace ft
 {
 
 	/**
-	 * Vectors are sequence containers representing arrays that can change in size.
+	 * Vectors are sequence containers representing dynamic size arrays.
 	 * 
-	 * @tparam T - type of objects who can be use in this vector
+	 * @tparam T - type of objects who can be stored in this vector
 	 * @tparam A - allocator template of type "T" in standard library
 	 */
 
@@ -52,9 +52,9 @@ namespace ft
 	 */
 
 		/**
-		 * Create new empty vector with capacity 1.
+		 * Create new empty vector with a capacity of 1.
 		 * 
-		 * @param alloc - Allocator's address, set to default allocator
+		 * @param alloc - Allocator's reference, set to default allocator
 		 */
 			explicit vector(const allocator_type& alloc = allocator_type()): _alloc(alloc)
 			{
@@ -64,18 +64,18 @@ namespace ft
 			}
 
 		/**
-		 * Create new vector with n capacity, completed by value.
+		 * Create new vector with a capacity of n, completed by value.
 		 * 
-		 * @param n - size of new vector
+		 * @param n - capacity of new vector
 		 * @param value - value of elements in new vector
-		 * @param alloc - Allocator's address, set to default allocator
+		 * @param alloc - Allocator's reference, set to default allocator
 		 */
-			explicit vector(size_t n, const value_type& value = value_type(), const allocator_type& alloc = allocator_type()): _alloc(alloc)
+			explicit vector(size_type n, const value_type& value = value_type(), const allocator_type& alloc = allocator_type()): _alloc(alloc)
 			{
 				_capacity = n;
 				_size = n;
 				_datas = _alloc.allocate(_capacity);
-				for (size_t i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_datas[i], value);
 			}
 
@@ -86,7 +86,7 @@ namespace ft
 		 * 
 		 * @param first - starting iterator
 		 * @param last - ending iterator
-		 * @param alloc - Allocator's address, set to default allocator
+		 * @param alloc - Allocator's reference, set to default allocator
 		 */
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
@@ -115,7 +115,7 @@ namespace ft
 			}
 
 		/**
-		 * Assign all attributes of an vector to this vector object.
+		 * Assign all attributes of a vector to this vector object.
 		 * 
 		 * @param rhs - reference to an other vector
 		 * @return reference of this
@@ -147,72 +147,72 @@ namespace ft
 	*/
 
 		/**
-		 * Get the first vector's array element.
+		 * Get the first vector array element.
 		 * 
-		 * @return address of the first vector's array element
+		 * @return iterator of the first vector array element
 		 */
 			iterator begin() {
 				return iterator(&_datas[0]);
 			}
 
 		/**
-		 * Get the first constant vector's array element.
+		 * Get the first constant vector array element.
 		 * 
-		 * @return address of the first vector's array element
+		 * @return const_iterator of the first vector array element
 		 */
 			const_iterator begin() const {
 				return const_iterator(&_datas[0]);
 			}
 
 		/**
-		 * Get the last vector's array element.
+		 * Get the last vector array element.
 		 * 
-		 * @return address of the last vector's array element
+		 * @return iterator of the last vector array element
 		 */
 			iterator end() {
 				return iterator(&_datas[_size]);
 			}
 
 		/**
-		 * Get the last constant vector's array element.
+		 * Get the last constant vector array element.
 		 * 
-		 * @return address of the last vector's array element
+		 * @return const_iterator of the last vector array element
 		 */
 			const_iterator end() const {
 				return const_iterator(&_datas[_size]);
 			}
 
 		/**
-		 * Get the last vector's array element.
+		 * Get the last vector array element.
 		 * 
-		 * @return address of the last vector's array element
+		 * @return reverse_iterator of the last vector array element
 		 */
 			reverse_iterator rbegin() {
 				return reverse_iterator(&_datas[_size]);
 			}
 
 		/**
-		 * Get the last constant vector's array element.
+		 * Get the last constant vector array element.
 		 * 
-		 * @return address of the last vector's array element
+		 * @return const_reverse_iterator of the last vector array element
 		 */
 			const_reverse_iterator rbegin() const {
 				return const_reverse_iterator(&_datas[_size]);
 			}
 
 		/**
-		 * Get the first vector's array element.
+		 * Get the first vector array element.
 		 * 
-		 * @return address of the first vector's array element
+		 * @return reverse_iterator of the first vector array element
 		 */
 			reverse_iterator rend() {
 				return reverse_iterator(&_datas[0]);
 			}
 
 		/**
-		 * Get the first constant vector's array element.
+		 * Get the first constant vector array element.
 		 * 
-		 * @return address of the first vector's array element
+		 * @return const_reverse_iterator of the first vector array element
 		 */
 			const_reverse_iterator rend() const {
 				return const_reverse_iterator(&_datas[0]);
@@ -235,9 +235,9 @@ namespace ft
 			}
 
 		/**
-		 * Get memory's max size can be allocate, this size change by the type "size_type".
+		 * Get memory max size can be allocated. This size change by the type "size_type".
 		 * 
-		 * @return memory's max size can be allocated
+		 * @return memory max size can be allocated
 		 */
 			size_type max_size() const 
 			{
@@ -245,8 +245,8 @@ namespace ft
 			}
 
 		/**
-		 * Change the size of datas's array, delete datas if the new size is smaller than before.
-		 * If the new size is bigger, fill the new empty value with NULL if the parameter "val" was not use.
+		 * Change the size of datas array, delete datas if the new size is smaller than before.
+		 * If the new size is bigger, fill the new empty value with NULL if the parameter "val" is not used.
 		 * If the new size is bigger, fill the new empty values with "val".
 		 * 
 		 * @param n - the new size of array
@@ -257,18 +257,15 @@ namespace ft
 			{
 				if (_capacity < n)
 				{
-					// Allocate new capacity
 					value_type *tmp = _datas;
 					_datas = _alloc.allocate(n);
 
-					// Fill new array with ancient values
-					for (size_t i = 0; i < _size; i++)
+					for (size_type i = 0; i < _size; i++)
 					{
 						_alloc.construct(&_datas[i], tmp[i]);
 						_alloc.destroy(&tmp[i]);
 					}
-					// Add new values in array
-					for (size_t i = _size; i < n; i++)
+					for (size_type i = _size; i < n; i++)
 						_alloc.construct(&_datas[i], val);
 
 					_alloc.deallocate(tmp, _capacity);
@@ -277,18 +274,16 @@ namespace ft
 				}
 				else if (_size > n)
 				{
-					// Allocate capacity in new array
 					value_type *tmp = _datas;
 					_datas = _alloc.allocate(_capacity);
 
-					// Fill new array with "n" ancient values
-					for (size_t i = 0; i < n; i++)
+					for (size_type i = 0; i < n; i++)
 					{
 						_alloc.construct(&_datas[i], tmp[i]);
 						_alloc.destroy(&tmp[i]);
 					}
 
-					for (size_t i = n; i < _size; i++)
+					for (size_type i = n; i < _size; i++)
 						_alloc.destroy(&tmp[i]);
 
 					_alloc.deallocate(tmp, _capacity);
@@ -296,17 +291,16 @@ namespace ft
 				}
 				else if (_size < n)
 				{
-					// Add new values in array
-					for (size_t i = _size; i < n; i++)
+					for (size_type i = _size; i < n; i++)
 						_alloc.construct(&_datas[i], val);
 					_size = n;
 				}
 			}
 
 		/**
-		 * Get capacity of vector, capacity is the maximum value who was allocated for array.
+		 * Get capacity of vector, capacity is the maximum size allocated for the datas array.
 		 * 
-		 * @return capacity of vector's array
+		 * @return capacity of vector array
 		 */
 			size_type capacity() const 
 			{
@@ -314,7 +308,7 @@ namespace ft
 			}
 
 		/**
-		 * Get if array is empty
+		 * Check if array is empty
 		 * 
 		 * @return true if array is empty
 		 */
@@ -326,21 +320,19 @@ namespace ft
 			}
 
 		/**
-		 * Allocate new value of capacity, the new capacity need to be bigger than before.
+		 * Allocate datas array for a new capacity. The new capacity needs to be bigger than before.
 		 * 
-		 * @param n - new size of capacity
+		 * @param n - new capacity
 		 * @return void
 		 */
-			void reserve (size_t n) 
+			void reserve (size_type n) 
 			{
 				if (_capacity < n || _datas == NULL)
 				{
-					// Allocate new capacity
 					pointer tmp = _datas;
 					_datas = _alloc.allocate(n);
 
-					// Fill new array with ancient values
-					for (size_t i = 0; i < _size; i++)
+					for (size_type i = 0; i < _size; i++)
 					{
 						_alloc.construct(&_datas[i], tmp[i]);
 						_alloc.destroy(&tmp[i]);
@@ -359,36 +351,36 @@ namespace ft
 	 */
 
 		/**
-		 * Get reference to the element in index "n" in array.
+		 * Get reference to the element at index "n" in array.
 		 * 
 		 * @param n - index of element
 		 * @return reference to the value
 		 */
-			reference operator[](size_t n) 
+			reference operator[](size_type n) 
 			{
 				return _datas[n];
 			}
 
 		/**
-		 * Get reference to the element in index "n" in array in constant.
+		 * Get const_reference to the element at index "n" in array as constant.
 		 * 
 		 * @param n - index of element
-		 * @return reference to the value
+		 * @return const_reference to the value
 		 */
-			const_reference operator[](size_t n) const 
+			const_reference operator[](size_type n) const 
 			{
 				return _datas[n];
 			}
 
 
 		/**
-		 * Get reference to the element in index "n" in array.
+		 * Get reference to the element at index "n" in array.
 		 * 
 		 * @param n - index of element
 		 * @throw std::out_of_range - throw if "n" is bigger than size
 		 * @return reference to the value
 		 */
-			reference at (size_t n) 
+			reference at (size_type n) 
 			{
 				if (_size < n)
 					throw std::out_of_range("vector");
@@ -396,13 +388,13 @@ namespace ft
 			}
 
 		/**
-		 * Get reference to the element in index "n" in array in constant.
+		 * Get const_reference to the element at index "n" in array as constant.
 		 * 
 		 * @param n - index of element
 		 * @throw std::out_of_range - throw if "n" is bigger than size
-		 * @return reference to the value
+		 * @return const_reference to the value
 		 */
-			const_reference at (size_t n) const 
+			const_reference at (size_type n) const 
 			{
 				if (_size < n)
 					throw std::out_of_range("vector");
@@ -420,9 +412,9 @@ namespace ft
 			}
 
 		/**
-		 * Get reference of the first element in array in contant.
+		 * Get const_reference of the first element in array as constant.
 		 * 
-		 * @return reference of the last value in array
+		 * @return const_reference of the last value in array
 		 */
 			const_reference front () const 
 			{
@@ -440,9 +432,9 @@ namespace ft
 			}
 
 		/**
-		 * Get reference of the last element in array in contant.
+		 * Get const_reference of the last element in array as contant.
 		 * 
-		 * @return reference of the last value in array
+		 * @return const_reference of the last value in array
 		 */
 			const_reference back () const 
 			{
@@ -456,12 +448,12 @@ namespace ft
 	 */
 
 		/**
-		 * Clear vector's array and create new one with the values between "first" and "last".
-		 * Capacity can be only increase.
+		 * Clear vector datas array and create new one with the values between "first" and "last".
+		 * Capacity can be only increased.
 		 * This function use an input iterator.
 		 * 
 		 * @param first - starting iterator
-		 * @param last - endding iterator
+		 * @param last - ending iterator
 		 * @return void
 		 */
 			template <class InputIterator>
@@ -474,8 +466,8 @@ namespace ft
 			}
 		
 		/**
-		 * Clear vector's array and create new one with size "n" and fill it with value "val".
-		 * Capacity can be only increase.
+		 * Clear vector datas array and create new one with size "n" and fill it with value "val".
+		 * Capacity can be only increased.
 		 * 
 		 * @param n - new size of array
 		 * @param val - value filled
@@ -485,13 +477,13 @@ namespace ft
 			{
 				clear();
 				check_capacity(n);
-				for (size_t i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					push_back(val);	
 			}
 
 		/**
 		 * Add new element "val" in array, if the size equal capacity, 
-		 * increase capacity by multiplicate this actual capacity by two. 
+		 * increase capacity by multiplicating this actual capacity by 2. 
 		 * 
 		 * @param val - value to add
 		 * @return void
@@ -515,7 +507,7 @@ namespace ft
 			}
 
 		/**
-		 * Insert in array the value "val" in "position", "position" is an iterator of its own array.
+		 * Insert into array the value "val" in "position". "position" is an iterator of its own array.
 		 * 
 		 * @param position - iterator of its own array, position of the new added value
 		 * @param val - value to add
@@ -527,7 +519,7 @@ namespace ft
 				if (index <= _capacity)
 				{
 					check_capacity();
-					for (size_t i = _size; i >= 0; i--)
+					for (size_type i = _size; i >= 0; i--)
 					{
 						// Move value in actual index to the next index and put the new one at the index
 						if (i == index)
@@ -567,14 +559,14 @@ namespace ft
 					else
 						check_capacity();
 
-					for (size_t i = _size; i >= 0; i--)
+					for (size_type i = _size; i >= 0; i--)
 					{
 						// Move value in actual index to the next index + "n" and put the new one at the index
 						if (i == index)
 						{
 							_alloc.construct(&_datas[i + n], _datas[i]);
 							_alloc.destroy(&_datas[i]);
-							for (size_t j = 0; j < n; j++)
+							for (size_type j = 0; j < n; j++)
 								_alloc.construct(&_datas[i + j], val);
 							break;
 						}
@@ -605,14 +597,12 @@ namespace ft
 				size_type index = position - begin();
 				if (index <= _capacity)
 				{
-					// Create new array
 					value_type *tmp = _datas;
 					size_type	size_tmp = _size;
 					size_type	capacity_tmp = _capacity;
 					_datas = _alloc.allocate(_capacity);
 
-					// Fill new array with ancient values to position
-					for (size_t i = 0; i < index; i++)
+					for (size_type i = 0; i < index; i++)
 					{
 						_alloc.construct(&_datas[i], tmp[i]);
 						_alloc.destroy(&tmp[i]);
@@ -620,12 +610,10 @@ namespace ft
 
 					_size = index;
 
-					// Add values between "first" and "last"
 					for ( ; first != last; first++)
 						push_back(*first);
 
-					// Fill new array with ancient values
-					for (size_t i = index; i < size_tmp; i++)
+					for (size_type i = index; i < size_tmp; i++)
 					{
 						push_back(tmp[i]);
 						_alloc.destroy(&tmp[i]);
@@ -635,7 +623,7 @@ namespace ft
 			}
 
 		/**
-		 * Delete in array the element in "position" , "position" is an iterator of its own array.
+		 * Delete in array the element at "position".
 		 * 
 		 * @param position - iterator of its own array, position of deleted value
 		 * @return iterator of the first element of array
@@ -644,11 +632,9 @@ namespace ft
 			{
 				size_type index = position - begin();
 
-				// Destroy the element in index
 				_alloc.destroy(&_datas[index]);
 
-				// Replace all next elements to fill correctly the array 
-				for (size_t i = index; i < _size; i++)
+				for (size_type i = index; i < _size; i++)
 				{
 					_alloc.construct(&_datas[i], _datas[i + 1]);
 					_alloc.destroy(&_datas[i + 1]);
@@ -672,14 +658,14 @@ namespace ft
 				size_type index;
 				size_type index_tmp;
 				iterator tmp = first;
-				// Destroy the elements from "first" to "last"
+
 				for ( ; first != last; first++)
 				{
 					index = first - begin();
 					_alloc.destroy(&_datas[index]);
 					_size--;
 				}
-				// Replace all elements to fill correctly the array 
+
 				for ( ; tmp != end(); tmp++)
 				{
 					index = last - begin();
@@ -688,13 +674,14 @@ namespace ft
 					_alloc.destroy(&_datas[index]);
 					last++;
 				}
+
 				return _datas;
 			}
 
 		/**
 		 * Swap all informations of himself and reference of vector.
 		 * 
-		 * @param x - address of vector we want to swap
+		 * @param x - reference of vector we want to swap
 		 * @return void 
 		 */
 			void swap (vector &x)
@@ -712,7 +699,7 @@ namespace ft
 		 */
 			void clear ()
 			{
-				for (size_t i = 0; i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(&_datas[i]);
 				
 				_alloc.deallocate(_datas, _capacity);
@@ -729,7 +716,7 @@ namespace ft
 		/**
 		 * Get allocator of vector.
 		 * 
-		 * @return allocator reference
+		 * @return allocator
 		 */
 			allocator_type get_allocator() const
 			{
@@ -791,8 +778,8 @@ namespace ft
 	/**
 	 * Overload of "==" operator
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if the two vectors are equal
 	 */
 	template <class T, class A>
@@ -800,7 +787,7 @@ namespace ft
 	{
 		if (lhs.max_size() == rhs.max_size() && lhs.get_allocator() == rhs.get_allocator() && lhs.size() == rhs.size() && lhs.capacity() == rhs.capacity())
 		{
-			for (size_t i = 0; i < lhs.size(); i++)
+			for (size_type i = 0; i < lhs.size(); i++)
 			{
 				if (lhs.at(i) != rhs.at(i))
 					return false;
@@ -813,8 +800,8 @@ namespace ft
 	/**
 	 * Overload of "!=" operator
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if the two vectors are not equal
 	 */
 	template <class T, class A>
@@ -822,7 +809,7 @@ namespace ft
 	{
 		if (lhs.max_size() == rhs.max_size() && lhs.get_allocator() == rhs.get_allocator() && lhs.size() == rhs.size() && lhs.capacity() == rhs.capacity())
 		{
-			for (size_t i = 0; i < lhs.size(); i++)
+			for (size_type i = 0; i < lhs.size(); i++)
 			{
 				if (lhs.at(i) != rhs.at(i))
 					return true;
@@ -835,8 +822,8 @@ namespace ft
 	/**
 	 * Overload of "<" operator.
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if "lhs" are smaller than "rhs"
 	 */
 	template <class T, class A>
@@ -848,8 +835,8 @@ namespace ft
 	/**
 	 * Overload of "<=" operator.
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if "lhs" are smaller than "rhs" or equal
 	 */
 	template <class T, class A>
@@ -861,8 +848,8 @@ namespace ft
 	/**
 	 * Overload of ">" operator.
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if "lhs" are bigger than "rhs"
 	 */
 	template <class T, class A>
@@ -874,8 +861,8 @@ namespace ft
 	/**
 	 * Overload of ">=" operator.
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return true if "lhs" are bigger than "rhs" or equal
 	 */
 	template <class T, class A>
@@ -888,8 +875,8 @@ namespace ft
 	 * Overload of "swap" function.
 	 * Swap all informations of himself and reference of vector.
 	 * 
-	 * @param lhs - address of vector
-	 * @param rhs - address of vector
+	 * @param lhs - vector reference
+	 * @param rhs - vector reference
 	 * @return void 
 	 */
 	template <class T, class A>

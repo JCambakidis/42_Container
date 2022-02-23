@@ -66,8 +66,6 @@ namespace ft
 			{
 				protected:
 					Compare _comp;
-				private:
-					/* data */
 				public:
 					value_compare(): _comp(new Compare()){}
 					~value_compare(){}
@@ -76,7 +74,7 @@ namespace ft
 					 * Compare two value_type and return the result of comparator stored.
 					 * 
 					 * @param lhs - first value_type to compare
-					 * @param rhs - second value_tuype to compare
+					 * @param rhs - second value_type to compare
 					 * @return result of comparator stored
 					 */
 					bool operator()( const value_type& lhs, const value_type& rhs ) const
@@ -86,14 +84,14 @@ namespace ft
 			};
 		
 	/**
-	 * Constructor
+	 * Constructors
 	 */
 
 		/**
 		 * Construct new empty map.
 		 * 
-		 * @param comp - Compare's address, set to default Compare
-		 * @param alloc - Allocator's address, set to default allocator
+		 * @param comp - Compare's reference, set to default Compare
+		 * @param alloc - Allocator's reference, set to default allocator
 		 */
 			explicit map (const key_compare& comp = key_compare(), const new_alloc& alloc = new_alloc()): _alloc(alloc), _comp(comp)
 			{
@@ -106,8 +104,8 @@ namespace ft
 		 *
 		 * @param first - starting iterator
 		 * @param last - ending iterator
-		 * @param comp - Compare's address, set to default Compare
-		 * @param alloc - Allocator's address, set to default allocator
+		 * @param comp - Compare's reference, set to default Compare
+		 * @param alloc - Allocator's reference, set to default allocator
 		 */
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const new_alloc& alloc = new_alloc()): _alloc(alloc), _comp(comp)
@@ -145,7 +143,7 @@ namespace ft
 		 * Allocate map's values with an other map's values.
 		 * 
 		 * @param x - map's reference
-		 * @return address of this
+		 * @return pointer of this
 		 */
 			map& operator= (const map& x)
 			{
@@ -165,7 +163,7 @@ namespace ft
 		/**
 		 * Get the first map's tree element.
 		 * 
-		 * @return address of the first map's tree element
+		 * @return iterator of the first map's tree element
 		 */
 			iterator begin()
 			{
@@ -175,7 +173,7 @@ namespace ft
 		/**
 		 * Get the first constant map's tree element.
 		 * 
-		 * @return address of the first map's tree element
+		 * @return const_iterator of the first map's tree element
 		 */
 			const_iterator begin() const {
 				return const_iterator(_tree->find_min(_tree->getRoot()));
@@ -184,7 +182,7 @@ namespace ft
 		/**
 		 * Get the last map's tree element.
 		 * 
-		 * @return address of the last map's tree element
+		 * @return iterator of the last map's tree element
 		 */
 			iterator end()
 			{
@@ -194,7 +192,7 @@ namespace ft
 		/**
 		 * Get the last constant map's tree element.
 		 * 
-		 * @return address of the last map's tree element
+		 * @return const_iterator of the last map's tree element
 		 */
 			const_iterator end() const
 			{
@@ -204,7 +202,7 @@ namespace ft
 		/**
 		 * Get the last map's tree element.
 		 * 
-		 * @return address of the last map's tree element
+		 * @return reverse_iterator of the last map's tree element
 		 */
 			reverse_iterator rbegin()
 			{
@@ -214,7 +212,7 @@ namespace ft
 		/**
 		 * Get the last constant map's tree element.
 		 * 
-		 * @return address of the last map's tree element
+		 * @return const_reverse_iterator of the last map's tree element
 		 */
 			const_reverse_iterator rbegin() const
 			{
@@ -224,7 +222,7 @@ namespace ft
 		/**
 		 * Get the first map's tree element.
 		 * 
-		 * @return address of the first map's tree element
+		 * @return reverse_iterator of the first map's tree element
 		 */
 			reverse_iterator rend()
 			{
@@ -234,7 +232,7 @@ namespace ft
 		/**
 		 * Get the first constant map's tree element.
 		 * 
-		 * @return address of the first map's tree element
+		 * @return const_reverse_iterator of the first map's tree element
 		 */
 			const_reverse_iterator rend() const
 			{
@@ -246,7 +244,7 @@ namespace ft
 	 */
 
 		/**
-		 * Check is map is empty.
+		 * Check if map is empty.
 		 * 
 		 * @return true if map is empty
 		 */
@@ -256,7 +254,7 @@ namespace ft
 			}
 
 		/**
-		 * Get map's size.
+		 * Get map size.
 		 * 
 		 * @return map's size
 		 */
@@ -266,9 +264,9 @@ namespace ft
 			}
 
 		/**
-		 * Get memory's max size can be allocate, this size change by the type "difference_type".
+		 * Get max memory can be allocate, this size change by the type "difference_type".
 		 * 
-		 * @return memory's max size can be allocated
+		 * @return max memory can be allocated
 		 */
 			size_type max_size() const
 			{
@@ -301,9 +299,9 @@ namespace ft
 	 */
 
 		/**
-		 * Insert pair in tree
+		 * Insert pair in tree.
 		 * 
-		 * @param val - datas of new node - value_type is pair<key_type, T>
+		 * @param val - datas of new node
 		 * @return pair < values insered, true if is insered >
 		 */
 			ft::pair<iterator,bool> insert (const value_type &val) const
@@ -316,9 +314,9 @@ namespace ft
 		/**
 		 * Insert pair in tree at position.
 		 * 
-		 * @param position - iterator of BiTreeNode, node position to start insertion
-		 * @param val - datas of new node - value_type is pair<key_type, T>
-		 * @return pair insered
+		 * @param position - iterator of BiTreeNode
+		 * @param val - datas of new node
+		 * @return iterator of insered element
 		 */
 			iterator insert (iterator position, const value_type& val) const
 			{
@@ -360,7 +358,7 @@ namespace ft
 		/**
 		 * Delete node in tree at "position".
 		 * 
-		 * @param position - pair iterator
+		 * @param position - iterator of BiTreeNode
 		 * @return void
 		 */
 			void erase (iterator position) const
@@ -387,8 +385,8 @@ namespace ft
 		/**
 		 * Delete nodes pointed by "first" to "last".
 		 * 
-		 * @param first - pair iterator
-		 * @param last - pair iterator
+		 * @param first - first element iterator
+		 * @param last - last element iterator
 		 * @return void
 		 */
 			void erase (iterator first, iterator last) const
@@ -398,7 +396,7 @@ namespace ft
 			}
 
 		/**
-		 * Swap value under map and "x".
+		 * Swap map and "x" values.
 		 * 
 		 * @param x - reference of map we want to swap values
 		 * @return void
@@ -411,7 +409,7 @@ namespace ft
 			}
 
 		/**
-		 * Clean all elements in tree and map and free memory allocated.
+		 * Clear all elements and free memory allocated.
 		 * 
 		 * @return void 
 		 */

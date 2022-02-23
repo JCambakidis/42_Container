@@ -30,7 +30,7 @@ namespace ft
 		second_type second;
 
 	/**
-	 * Constructor
+	 * Constructors
 	 */
 
 		/**
@@ -41,7 +41,7 @@ namespace ft
 		/**
 		 * Construct new pair with values of pair "pr".
 		 * 
-		 * @param pr - pair address
+		 * @param pr - pair reference
 		 */
 		template<class U, class V> 
 		pair (const ft::pair<U,V>& pr) : first(pr.first), second(pr.second) {}
@@ -49,8 +49,8 @@ namespace ft
 		/**
 		 * Construct new pair with "a" and "b" values.
 		 * 
-		 * @param a - first value
-		 * @param b - second value
+		 * @param a - first value reference
+		 * @param b - second value reference
 		 */
 		pair (const first_type& a, const second_type& b) : first(a) ,second(b) {}
 
@@ -64,9 +64,9 @@ namespace ft
 	 */
 
 		/**
-		 * Swap first and second pair elements with a pair "pr".
+		 * Swap pair elements with a pair "pr".
 		 * 
-		 * @param pr - pair to swap
+		 * @param pr - pair reference
 		 * @return void
 		 */
 		void swap (pair& pr)
@@ -82,8 +82,8 @@ namespace ft
 		/**
 		 * Copy pair "pr".
 		 * 
-		 * @param pr - pair' address
-		 * @return Address of this
+		 * @param pr - pair reference
+		 * @return pointer of this
 		 */
 		pair& operator= (const pair& pr)
 		{
@@ -95,8 +95,8 @@ namespace ft
 		/**
 		 * Overload of "==" operator
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if the two pairs are equal
 		 */
 		friend bool operator== (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return lhs.first==rhs.first && lhs.second==rhs.second; }
@@ -104,8 +104,8 @@ namespace ft
 		/**
 		 * Overload of "!=" operator
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if the two pairs are not equal
 		 */
 		friend bool operator!= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return !(lhs==rhs); }
@@ -113,8 +113,8 @@ namespace ft
 		/**
 		 * Overload of "<" operator.
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if "lhs" are smaller than "rhs"
 		 */
 		friend bool operator<  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second); }
@@ -122,8 +122,8 @@ namespace ft
 		/**
 		 * Overload of "<=" operator.
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if "lhs" are smaller than "rhs" or equal
 		 */
 		friend bool operator<= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return !(rhs<lhs); }
@@ -131,8 +131,8 @@ namespace ft
 		/**
 		 * Overload of ">" operator.
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if "lhs" are bigger than "rhs"
 		 */
 		friend bool operator>  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return rhs<lhs; }
@@ -140,8 +140,8 @@ namespace ft
 		/**
 		 * Overload of ">=" operator.
 		 * 
-		 * @param lhs - pair's address
-		 * @param rhs - pair's address
+		 * @param lhs - pair reference
+		 * @param rhs - pair reference
 		 * @return true if "lhs" are bigger than "rhs" or equal
 		 */
 		friend bool operator>= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs) { return !(lhs<rhs); }
@@ -151,8 +151,8 @@ namespace ft
 	/**
 	 * Create new pair.
 	 * 
-	 * @param first - first element of pair
-	 * @param second - second element of pair
+	 * @param first - first element
+	 * @param second - second element
 	 * @return pair created
 	 */
 	template <class T1, class T2>

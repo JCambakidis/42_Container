@@ -28,13 +28,18 @@ namespace ft
 		 */
 		BiTreeNode(void) : data(Pair()) {}
 
+		/**
+		 * Create copy of "instance" node.
+		 * 
+		 * @param instance - BiTreeNode reference
+		 */
 		BiTreeNode(BiTreeNode const &instance): parent(instance.parent), data(instance.data), left(instance.left), right(instance.right), color(instance.color){}
 
 		/**
 		 * Create node with parent and datas.
 		 * 
-		 * @param parents - parent's node of new node
-		 * @param datas - new node's datas
+		 * @param parent - parent of new node
+		 * @param datas - node datas
 		 */
 		BiTreeNode(BiTreeNode *parents, Pair datas) : parent(parents), data(datas), left(NULL), right(NULL), color(0) {}
 
