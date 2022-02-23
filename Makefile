@@ -39,7 +39,7 @@ INCS			=	$(addprefix $(INCS_DIR)/,$(INCS_FILES))
 OBJS			=	$(addprefix $(COMPILED_DIR)/,$(SRCS_FILES:.cpp=.o))
 
 CC				=	clang++
-FLAGS			=	-Wall -Wextra -Werror -std=c++98
+FLAGS			=	-Wall -Wextra -Werror -std=c++98 -g
 
 all: $(NAME)
 

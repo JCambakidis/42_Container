@@ -575,9 +575,15 @@ namespace ft
 				if (find(p->first) == NULL)
 					tmp = _insert_by_root_tree(_root, createNode(p));
 				else
+				{
+					_replaceNullNode();
 					return false;
+				}
 				if (tmp == NULL)
+				{
+					_replaceNullNode();
 					return false;
+				}
 				_root = tmp;
 				_replaceNullNode();
 				return true;
@@ -595,9 +601,15 @@ namespace ft
 				if (find(p->first) == NULL)
 					tmp = _insert_by_root_tree(_root, createNode(p));
 				else
+				{
+					_replaceNullNode();
 					return false;
+				}
 				if (tmp == NULL)
+				{
+					_replaceNullNode();
 					return false;
+				}
 				_root = tmp;
 				_replaceNullNode();
 				return true;

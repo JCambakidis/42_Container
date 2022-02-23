@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
 	if (argc == 2)
 		seed = atoi(argv[1]);
 	else
-		seed = 111;
+		seed = 1;
 	std::ofstream	my_file_vector;
 	std::ofstream	file_vector;
 	

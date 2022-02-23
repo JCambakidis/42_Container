@@ -41,7 +41,9 @@ class bidirectional_iterator {
 		bidirectional_iterator& operator++()
 		{
 			Node *tmp = _node;
-
+		
+			if (tmp->color == -1)
+				return *this;
 			if (tmp->right == NULL)
 			{
 				if (tmp == tmp->parent->right)
@@ -61,7 +63,7 @@ class bidirectional_iterator {
 			else if (tmp->right != NULL)
 			{
 				tmp = tmp->right;
-				while (tmp->left != NULL)
+				while (tmp->left != NULL && tmp->color != -1)
 					tmp = tmp->left;
 			}
 			if (tmp != NULL)
@@ -73,6 +75,8 @@ class bidirectional_iterator {
 		{
 			Node *tmp = _node;
 		
+			if (tmp->color == -1)
+				return *this;
 			if (tmp->right == NULL)
 			{
 				if (tmp == tmp->parent->right)
@@ -92,7 +96,7 @@ class bidirectional_iterator {
 			else if (tmp->right != NULL)
 			{
 				tmp = tmp->right;
-				while (tmp->left != NULL)
+				while (tmp->left != NULL && tmp->color != -1)
 					tmp = tmp->left;
 			}
 			if (tmp != NULL)
