@@ -1,5 +1,5 @@
 .vscode/
-./compiled_sources/
-./result/
-./containers
+compiled_sources/
+result/
+containers
 *.o
