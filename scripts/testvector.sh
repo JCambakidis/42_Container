@@ -1,0 +1,1 @@
+./containers && diff ./result/vector/MyVector.txt ./result/vector/RealVector.txt && echo $?

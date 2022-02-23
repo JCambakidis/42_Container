@@ -20,7 +20,7 @@ class bidirectional_iterator {
 
 		bidirectional_iterator& operator=(const bidirectional_iterator &it)
 		{
-			_node = new Node(*it._node);
+			_node = it._node;
 			return *this;
 		}
 
@@ -33,36 +33,36 @@ class bidirectional_iterator {
 
 		bool operator!=(const bidirectional_iterator &it) const
 		{
-			return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second);
+			if(_node != NULL && it._node != NULL)
+				return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second);
+			return false;
 		}
 
 		bidirectional_iterator& operator++()
 		{
 			Node *tmp = _node;
-			while (tmp->data.first == _node->data.first)
+
+			if (tmp->right == NULL)
 			{
-				if (tmp->right == NULL)
+				if (tmp == tmp->parent->right)
 				{
-					if (tmp == tmp->parent->right)
+					while (tmp->parent != NULL && tmp == tmp->parent->right)
+						tmp = tmp->parent;
+					if (tmp->parent == NULL)
 					{
-						while (tmp == tmp->parent->right)
-							tmp = tmp->parent;
-						if (tmp->parent == NULL)
-						{
-							_node = _node->right;
-							return *this;
-						}
-						tmp = tmp->parent;
+						_node = _node->right;
+						return *this;
 					}
-					else
-						tmp = tmp->parent;
+					tmp = tmp->parent;
 				}
-				else if (tmp->right != NULL)
-				{
-					tmp = tmp->right;
-					while (tmp->left != NULL)
-						tmp = tmp->left;
-				}
+				else
+					tmp = tmp->parent;
+			}
+			else if (tmp->right != NULL)
+			{
+				tmp = tmp->right;
+				while (tmp->left != NULL)
+					tmp = tmp->left;
 			}
 			if (tmp != NULL)
 				_node = tmp;
@@ -72,30 +72,28 @@ class bidirectional_iterator {
 		bidirectional_iterator operator++(int)
 		{
 			Node *tmp = _node;
-			while (tmp->data.first == _node->data.first)
+		
+			if (tmp->right == NULL)
 			{
-				if (tmp->right == NULL)
+				if (tmp == tmp->parent->right)
 				{
-					if (tmp == tmp->parent->right)
+					while (tmp->parent != NULL && tmp == tmp->parent->right)
+						tmp = tmp->parent;
+					if (tmp->parent == NULL)
 					{
-						while (tmp == tmp->parent->right)
-							tmp = tmp->parent;
-						if (tmp->parent == NULL)
-						{
-							_node = _node->right;
-							return *this;
-						}
-						tmp = tmp->parent;
+						_node = _node->right;
+						return *this;
 					}
-					else
-						tmp = tmp->parent;
+					tmp = tmp->parent;
 				}
-				else if (tmp->right != NULL)
-				{
-					tmp = tmp->right;
-					while (tmp->left != NULL)
-						tmp = tmp->left;
-				}
+				else
+					tmp = tmp->parent;
+			}
+			else if (tmp->right != NULL)
+			{
+				tmp = tmp->right;
+				while (tmp->left != NULL)
+					tmp = tmp->left;
 			}
 			if (tmp != NULL)
 				_node = tmp;
@@ -105,32 +103,9 @@ class bidirectional_iterator {
 		bidirectional_iterator& operator--()
 		{
 			Node *tmp = _node;
-			while (tmp->data.first == _node->data.first)
-			{
-				if (tmp->left == NULL)
-				{
-					if (tmp == tmp->parent->left)
-					{
-						while (tmp == tmp->parent->left)
-							tmp = tmp->parent;
-						if (tmp->parent == NULL)
-						{
-							_node = _node->left;
-							return *this;
-						}
-						tmp = tmp->parent;
-					}
-					else
-						tmp = tmp->parent;
-				}
-				else if (tmp->left != NULL)
-				{
-					tmp = tmp->left;
-					while (tmp->right != NULL)
-						tmp = tmp->right;
-				}
-			}
-			if (tmp->left == NULL)
+			if(tmp->color == -1 && tmp->parent == NULL)
+				return *this;
+			if (tmp->left == NULL && tmp->parent != NULL)
 			{
 				if (tmp == tmp->parent->left)
 				{
@@ -160,32 +135,7 @@ class bidirectional_iterator {
 		bidirectional_iterator operator--(int)
 		{
 			Node *tmp = _node;
-			while (tmp->data.first == _node->data.first)
-			{
-				if (tmp->left == NULL)
-				{
-					if (tmp == tmp->parent->left)
-					{
-						while (tmp == tmp->parent->left)
-							tmp = tmp->parent;
-						if (tmp->parent == NULL)
-						{
-							_node = _node->left;
-							return *this;
-						}
-						tmp = tmp->parent;
-					}
-					else
-						tmp = tmp->parent;
-				}
-				else if (tmp->left != NULL)
-				{
-					tmp = tmp->left;
-					while (tmp->right != NULL)
-						tmp = tmp->right;
-				}
-			}
-			if (tmp->left == NULL)
+			if (tmp->left == NULL && tmp->parent != NULL)
 			{
 				if (tmp == tmp->parent->left)
 				{

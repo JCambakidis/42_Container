@@ -121,7 +121,7 @@ namespace ft
 		/**
 		 * Construct new map filled with an other map's values.
 		 * 
-		 * @param x - map's address
+		 * @param x - map's reference
 		 */
 			map (const map& x)
 			{
@@ -144,7 +144,7 @@ namespace ft
 		/**
 		 * Allocate map's values with an other map's values.
 		 * 
-		 * @param x - map's address
+		 * @param x - map's reference
 		 * @return address of this
 		 */
 			map& operator= (const map& x)
@@ -188,7 +188,7 @@ namespace ft
 		 */
 			iterator end()
 			{
-				return iterator(_tree->find_max(_tree->getRoot())->right);
+				return iterator(_tree->getEmptyNode());
 			}
 
 		/**
@@ -198,7 +198,7 @@ namespace ft
 		 */
 			const_iterator end() const
 			{
-				return const_iterator(_tree->find_max(_tree->getRoot())->right);
+				return const_iterator(_tree->getEmptyNode());
 			}
 
 		/**
@@ -208,7 +208,7 @@ namespace ft
 		 */
 			reverse_iterator rbegin()
 			{
-				return reverse_iterator(_tree->find_max(_tree->getRoot()));
+				return reverse_iterator(_tree->getEmptyNode());
 			}
 
 		/**
@@ -218,7 +218,7 @@ namespace ft
 		 */
 			const_reverse_iterator rbegin() const
 			{
-				return const_reverse_iterator(_tree->find_max(_tree->getRoot()));
+				return const_reverse_iterator(_tree->getEmptyNode());
 			}
 
 		/**
@@ -266,13 +266,13 @@ namespace ft
 			}
 
 		/**
-		 * Get memory's max size can be allocate, this size change by the type "size_type".
+		 * Get memory's max size can be allocate, this size change by the type "difference_type".
 		 * 
 		 * @return memory's max size can be allocated
 		 */
 			size_type max_size() const
 			{
-				return  std::numeric_limits<size_type>::max() / sizeof(value_type);
+				return  _alloc.max_size();
 			}
 
 	/**
@@ -282,12 +282,18 @@ namespace ft
 		/**
 		 * Get tree element in key "k".
 		 * 
-		 * @param k - key of finded value
+		 * @param k - Key to search for
 		 * @return value in key "k"
 		 */
 			mapped_type& operator[] (const key_type& k) const
 			{
-				return _tree->find(k)->data.second;
+				node *tmp = _tree->find(k);
+				if (tmp == NULL)
+				{
+					insert(ft::pair<Key, T>(k, _tree->getEmptyNode()->data.second));
+					tmp = _tree->find(k);
+				}
+				return tmp->data.second;
 			}
 
 	/**
@@ -316,8 +322,24 @@ namespace ft
 		 */
 			iterator insert (iterator position, const value_type& val) const
 			{
-				_tree->insert(*position, &val);
-				return _tree->find(val.first);
+				if (find(val.first) == _tree->getEmptyNode())
+				{
+					node *tmp = position.get_node();
+					if ((_tree->getRoot()->data.first < tmp->data.first) && (_tree->getRoot()->data.first < val.first))
+					{
+						while (tmp != _tree->getRoot() && tmp->data.first < tmp->parent->data.first)
+							tmp = tmp->parent;
+						return _tree->insert(tmp->data, &val);
+					}
+					else if ((_tree->getRoot()->data.first < tmp->data.first) && (_tree->getRoot()->data.first > val.first))
+					{
+						while (tmp != _tree->getRoot() && tmp->data.first < tmp->parent->data.first)
+							tmp = tmp->parent;
+						return _tree->insert(tmp->data, &val);
+					}
+					return _tree->insert(_tree->getRoot()->data, &val);
+				}
+				return NULL;
 			}
 			
 
@@ -332,7 +354,7 @@ namespace ft
 			void insert (InputIterator first, InputIterator last) const
 			{
 				for ( ;first != last; first++)
-					_tree->insert(*first);
+					_tree->insert(&*first);
 			}
 
 		/**
@@ -343,20 +365,21 @@ namespace ft
 		 */
 			void erase (iterator position) const
 			{
-				ft::pair<const Key, T> tmp = position;
-				_tree->erase(tmp.first);
+				ft::pair<const Key, T> tmp = *position;
+				while (_tree->erase(tmp.first)){}
 			}
 
 		/**
 		 * Delete all nodes in tree with "k" values.
 		 * 
-		 * @param k - key of nodes who was deleted
+		 * @param k - Key to search for
 		 * @return number of nodes deleted
 		 */
 			size_type erase (const key_type& k) const
 			{
+				key_type tmp = k;
 				size_t res = 0;
-				while (_tree->erase(k))
+				while (_tree->erase(tmp))
 					res++;
 				return res;
 			}
@@ -371,13 +394,13 @@ namespace ft
 			void erase (iterator first, iterator last) const
 			{
 				for ( ;first != last; first++)
-					_tree->erase(first);
+					_tree->erase(first->first);
 			}
 
 		/**
 		 * Swap value under map and "x".
 		 * 
-		 * @param x - address of map we want to swap values
+		 * @param x - reference of map we want to swap values
 		 * @return void
 		 */
 			void swap (map& x) const
@@ -408,8 +431,9 @@ namespace ft
 	 */
 
 		/**
+		 * Returns the function object that compares the keys, which is a copy of this container's constructor argument comp.
 		 * 
-		 * 
+		 * @return key comparison function object.
 		 */
 			key_compare key_comp() const
 			{
@@ -417,9 +441,15 @@ namespace ft
 				return kcomp;
 			}
 
+		/**
+		 * Returns a function object that compares objects of type ft::map::value_type (key_value pairs) by using key_comp to compare the first components of the pairs.
+		 * 
+		 * @return value comparison function object.
+		 */
 			value_compare value_comp() const
 			{
-
+				value_compare vcomp;
+				return vcomp;
 			}
 
 	/**
@@ -427,64 +457,174 @@ namespace ft
 	 */
 
 		/**
-		 * Find first element in map with ker "k".
+		 * Find first element in map with ker "k" , and return an iterator pointing to the finded element.
+		 * Return end() if no element was find.
 		 * 
-		 * @param k - key research
+		 * @param k - Key to search for
 		 * @return iterator of pair finded
 		 */
 			iterator find (const key_type& k)
 			{
-				return iterator(_tree->find(k));
+				node *tmp = _tree->find(k);
+				if (tmp == NULL)
+					return end();
+				return iterator(tmp);
 			}
 
 		/**
-		 * Find first element in map with ker "k".
+		 * Find first element in map with ker "k" , and return an const_iterator pointing to the finded element.
+		 * Return end() if no element was find.
 		 * 
-		 * @param k - key research
+		 * @param k - Key to search for
 		 * @return const_iterator of pair finded
 		 */
 			const_iterator find (const key_type& k) const
 			{
-				return const_iterator(_tree->find(k));
+				node *tmp = _tree->find(k);
+				if (tmp == NULL)
+					return end();
+				return const_iterator(tmp);
 			}
 
-			// size_type count (const key_type& k) const
-			// {
+		/**
+		 * Returns the number of elements with key that compares equivalent to the specified argument, 
+		 * which is either 1 or 0 since this container does not allow duplicates.
+		 * 
+		 * @param k - Key to search for
+		 * @return 1 if key is found
+		 */		
+			size_type count (const key_type& k) const
+			{
+				node *tmp = _tree->find(k);
+				if (tmp == NULL)
+					return 0;
+				return 1;
+			}
 
-			// }
+		/**
+		 * Returns an iterator pointing to the first element in the container whose key is not considered to go before "k".
+		 * Return end() if "k" is highter than the higthest element in map.
+		 * 
+		 * @param k - Key to search for
+		 * @return iterator pointing to the first element not considered to go before "k". end() if "k" is highter than max key value in map
+		 */
+			iterator lower_bound (const key_type& k)
+			{
+				iterator tmp = find(k);
+				if (tmp == _tree->getEmptyNode())
+				{
+					tmp = end();
+					tmp--;
+					if (k > tmp->first)
+						return end();
+					tmp = begin();
+					while (tmp->first < k)
+						tmp++;
+					return tmp;
+				}
+				return tmp;
+			}
 
-			// iterator lower_bound (const key_type& k) const
-			// {
+		/**
+		 * Returns an const_iterator pointing to the first element in the container whose key is not considered to go before "k".
+		 * Return end() if "k" is highter than the higthest element in map.
+		 * 
+		 * @param k - Key to search for
+		 * @return const_iterator pointing to the first element not considered to go before "k". end() if "k" is highter than max key value in map
+		 */
+			const_iterator lower_bound (const key_type& k) const
+			{
+				const_iterator tmp = find(k);
+				if (tmp == _tree->getEmptyNode())
+				{
+					tmp = end();
+					tmp--;
+					if (k > tmp->first)
+						return end();
+					tmp = begin();
+					while (tmp->first < k)
+						tmp++;
+					return tmp;
+				}
+				return tmp;
+			}
 
-			// }
+		/**
+		 * Returns an iterator pointing to the first element in the container whose key is considered to go after "k".
+		 * Return end() if "k" is highter than the higthest element in map.
+		 * 
+		 * @param k - Key to search for
+		 * @return iterator pointing to the first element not considered to go after "k". end() if "k" is highter than max key value in map
+		 */
+			iterator upper_bound (const key_type& k)
+			{
+				iterator tmp = find(k);
+				if (tmp == _tree->getEmptyNode())
+				{
+					tmp = end();
+					tmp--;
+					if (k > tmp->first)
+						return end();
+					tmp = begin();
+					while (tmp->first < k)
+						tmp++;
+					return tmp;
+				}
+				tmp++;
+				return tmp;
+			}
 
-			// const_iterator lower_bound (const key_type& k) const
-			// {
+		/**
+		 * Returns an const_iterator pointing to the first element in the container whose key is considered to go after "k".
+		 * Return end() if "k" is highter than the higthest element in map.
+		 * 
+		 * @param k - Key to search for
+		 * @return const_iterator pointing to the first element not considered to go after "k". end() if "k" is highter than max key value in map
+		 */
+			const_iterator upper_bound (const key_type& k) const
+			{
+				const_iterator tmp = find(k);
+				if (tmp == _tree->getEmptyNode())
+				{
+					tmp = end();
+					tmp--;
+					if (k > tmp->first)
+						return end();
+					tmp = begin();
+					while (tmp->first < k)
+					return tmp;
+				}
+				return tmp;
+			}
 
-			// }
+		/**
+		 * Returns a range containing all elements with the given key in the container. 
+		 * The range is defined by two const_iterators, one pointing to the first element that is not less than key and another pointing to the first element greater than key. 
+		 * Alternatively, the first const_iterator may be obtained with lower_bound(), and the second with upper_bound().
+		 * 
+		 * @param k - Key to search for
+		 * @return pair of const_iterator, the first iterator may be obtained with lower_bound(), and the second with upper_bound()
+		 */
+			ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{
+				return ft::pair<const_iterator,const_iterator>(lower_bound(k), upper_bound(k));
+			}
 
-			// iterator upper_bound (const key_type& k) const
-			// {
-
-			// }
-
-			// const_iterator upper_bound (const key_type& k) const
-			// {
-
-			// }
-
-			// ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-			// {
-
-			// }
-
-			// ft::pair<iterator,iterator> equal_range (const key_type& k) const
-			// {
-
-			// }
+		/**
+		 * Returns a range containing all elements with the given key in the container. 
+		 * The range is defined by two iterators, one pointing to the first element that is not less than key and another pointing to the first element greater than key. 
+		 * Alternatively, the first iterator may be obtained with lower_bound(), and the second with upper_bound().
+		 * 
+		 * @param k - Key to search for
+		 * @return pair of iterator, the first iterator may be obtained with lower_bound(), and the second with upper_bound()
+		 */
+			ft::pair<iterator,iterator> equal_range (const key_type& k)
+			{
+				return ft::pair<iterator,iterator>(lower_bound(k), upper_bound(k));
+			}
 
 	/**
-	 * Allocator
+	 * Getter
 	 */	
 
 		/**
@@ -497,6 +637,11 @@ namespace ft
 				return _alloc;
 			}
 
+		/**
+		 * Get tree of map.
+		 * 
+		 * @return tree
+		 */
 			ft::RBTree<Key, T> *get_tree()
 			{
 				return _tree;

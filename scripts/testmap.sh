@@ -1,0 +1,1 @@
+./containers && diff ./result/map/MyMap.txt ./result/map/RealMap.txt && echo $?

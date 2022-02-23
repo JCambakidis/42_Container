@@ -12,3 +12,9 @@ All are coded in c++98.
 
 To execute program use : make re && ./container XX
 (XX is the seed number of tests values)
+
+To execute map tests use : make tmap
+
+To execute vector tests use : make tvect
+
+To execute all tests use : make tall
