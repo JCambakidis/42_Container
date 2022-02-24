@@ -47,7 +47,7 @@ namespace ft
 
 	/**
 	 * 
-	 * Constructor
+	 * Constructors
 	 * 
 	 */
 
