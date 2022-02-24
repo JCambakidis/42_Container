@@ -10,33 +10,40 @@
 #include "../incs/tests/map/test_map.hpp"
 #include "../incs/Map/Map.hpp"
 
-int main(int argc, char const *argv[])
+int main()
 {
-	int seed;
-	if (argc == 2)
-		seed = atoi(argv[1]);
-	else
-		seed = 199;
-
 	std::ofstream	my_file_vector;
 	std::ofstream	file_vector;
+	std::ofstream	my_file_map;
+	std::ofstream	file_map;
 	
 	mkdir("./result", 0777);
 	mkdir("./result/vector", 0777);
+	mkdir("./result/map", 0777);
+
 	my_file_vector.open("./result/vector/MyVector.txt");
 	file_vector.open("result/vector/RealVector.txt");
-	test_vector<std::vector<int> >(100, seed, file_vector);
-	test_vector<ft::vector<int> >(100, seed, my_file_vector);
-	test_vector<std::vector<char> >(100, seed, file_vector);
-	test_vector<ft::vector<char> >(100, seed, my_file_vector);
-
-/*	std::ofstream	my_file_map;
-	std::ofstream	file_map;
-	mkdir("./result/map", 0777);
 	my_file_map.open("result/map/MyMap.txt");
 	file_map.open("result/map/RealMap.txt");
-	test_map<std::map<int, int> >(100, seed, file_map);
-	test_map<ft::map<int, int> >(100, seed, my_file_map);*/
+
+/**
+ * TESTS VECTOR
+ */
+	for (size_t seed = 0; seed < 200; seed++)
+	{
+		test_vector<std::vector<int> >(100, seed, file_vector);
+		test_vector<ft::vector<int> >(100, seed, my_file_vector);
+	}
+
+/**
+ * TESTS MAP
+ */
+	for (size_t seed = 0; seed < 200; seed++)
+	{
+		test_map<std::map<int, int> >(100, seed, file_map);
+		test_map<ft::map<int, int> >(100, seed, my_file_map);
+	}
+	
 	
 	return 0;
 }

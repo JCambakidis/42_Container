@@ -787,7 +787,7 @@ namespace ft
 	{
 		if (lhs.max_size() == rhs.max_size() && lhs.get_allocator() == rhs.get_allocator() && lhs.size() == rhs.size() && lhs.capacity() == rhs.capacity())
 		{
-			for (size_type i = 0; i < lhs.size(); i++)
+			for (size_t i = 0; i < lhs.size(); i++)
 			{
 				if (lhs.at(i) != rhs.at(i))
 					return false;
@@ -809,7 +809,7 @@ namespace ft
 	{
 		if (lhs.max_size() == rhs.max_size() && lhs.get_allocator() == rhs.get_allocator() && lhs.size() == rhs.size() && lhs.capacity() == rhs.capacity())
 		{
-			for (size_type i = 0; i < lhs.size(); i++)
+			for (size_t i = 0; i < lhs.size(); i++)
 			{
 				if (lhs.at(i) != rhs.at(i))
 					return true;
