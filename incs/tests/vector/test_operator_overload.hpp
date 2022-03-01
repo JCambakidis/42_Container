@@ -204,10 +204,7 @@ void	test_vector_external_function_swap(Vector &vect, std::ofstream &file)
 		vect2.push_back(f<typename Vector::value_type>(i * 100));
 	swap(vect, vect2);
 	file << "Vect 1" << std::endl;
-	for (size_t i = 0; i < vect.size(); i++)
-	{
-		file << "index:" << i << " | value:" << vect[i] << std::endl;
-	}
+ 	show_vector_datas(vect, file);
 	show_vector_infos(vect, file);
 	file << "Vect 2" << std::endl;
 	for (size_t i = 0; i < vect2.size(); i++)

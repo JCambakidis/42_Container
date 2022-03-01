@@ -175,7 +175,11 @@ namespace ft
 				if (n == NULL)
 					return NULL;
 				else if (n->data.first == key)
+				{
+					if (n->color == -1)
+						return NULL;
 					return n;
+				}
 				else if (n->data.first >= key)
 					return _find_by_node(key, n->left);
 				else if (n->data.first <= key)

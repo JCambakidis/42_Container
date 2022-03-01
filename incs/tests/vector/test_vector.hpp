@@ -39,7 +39,17 @@ char f<char>(int n)
 template <class Vector>
 void show_vector_infos(Vector &vect, std::ofstream &file)
 {
-	file << "size: " << vect.size() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl;
+	if (vect.capacity() > 0)
+		file << "size: " << vect.size() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl << std::endl;
+}
+
+template <class Vector>
+void show_vector_datas(Vector &vect, std::ofstream &file)
+{
+	for (size_t i = 0; i < vect.size(); i++)
+ 	{
+ 		file << "index:" << i << " | value:" << vect[i] << std::endl;
+ 	}
 }
 
 #include "test_insert.hpp"
@@ -79,7 +89,7 @@ void test_vector(size_t count, int seed, std::ofstream &file)
 	test_vector_elements_access(vector, file);
 	test_vector_resize(vector, file);
 	test_vector_insert(vector, file);
-	test_vector_clear(vector, file);
+	//test_vector_clear(vector, file);
 	test_vector_push_back(vector, file, count, seed);
 	test_vector_assign(vector, file);
 	test_vector_push_back(vector, file, count, seed);

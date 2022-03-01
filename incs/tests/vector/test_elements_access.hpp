@@ -9,7 +9,8 @@ void test_vector_elements_access(Vector &vect, std::ofstream &file)
  	file << "____________________________________________________________" << std::endl;
  	file << "______________________Elements Access_______________________" << std::endl;
  	file << "____________________________________________________________" << std::endl;
- 	file << "index 3 -> operator[]:" << vect[3] << std::endl;	
+	if (vect.size() > 3)
+ 		file << "index 3 -> operator[]:" << vect[3] << std::endl;	
  	try
  	{
  		file << "index 15 -> at:" << vect.at(15) << std::endl;

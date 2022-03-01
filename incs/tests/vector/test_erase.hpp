@@ -9,10 +9,7 @@ void	test_vector_erase_p(Vector &vect, std::ofstream &file)
 	file << std::endl << "************* test_vector_erase_p *************" << std::endl << std::endl;
 	typename Vector::iterator it = vect.begin() + 2;
 	vect.erase(it);
-	for (size_t i = 0; i < vect.size(); i++)
-	{
-		file << "index:" << i << " | value:" << vect[i] << std::endl;
-	}
+ 	show_vector_datas(vect, file);
 	show_vector_infos(vect, file);
 }
 
@@ -21,10 +18,7 @@ void	test_vector_erase_fl(Vector &vect, std::ofstream &file)
 {
 	file << std::endl << "************* test_vector_erase_fl *************" << std::endl << std::endl;
 	vect.erase(vect.begin() + 1, vect.begin() + 3);
-	for (size_t i = 0; i < vect.size(); i++)
-	{
-		file << "index:" << i << " | value:" << vect[i] << std::endl;
-	}
+ 	show_vector_datas(vect, file);
 	show_vector_infos(vect, file);
 }
 

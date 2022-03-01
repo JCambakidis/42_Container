@@ -10,40 +10,58 @@
 #include "../incs/tests/map/test_map.hpp"
 #include "../incs/Map/Map.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
 	std::ofstream	my_file_vector;
 	std::ofstream	file_vector;
 	std::ofstream	my_file_map;
 	std::ofstream	file_map;
+	int rand_value;
+	int my_tests = -1;
 	
 	mkdir("./result", 0777);
 	mkdir("./result/vector", 0777);
 	mkdir("./result/map", 0777);
 
-	my_file_vector.open("./result/vector/MyVector.txt");
-	file_vector.open("result/vector/RealVector.txt");
-	my_file_map.open("result/map/MyMap.txt");
-	file_map.open("result/map/RealMap.txt");
+	if(argc == 2)
+		my_tests = atoi(argv[1]);
+		
+	if (my_tests != 0)
+	{
+		my_file_vector.open("./result/vector/MyVector.txt");
+		my_file_map.open("result/map/MyMap.txt");
+	}
+	if (my_tests != 1)
+	{
+		file_vector.open("result/vector/RealVector.txt");
+		file_map.open("result/map/RealMap.txt");
+	}
 
 /**
  * TESTS VECTOR
  */
 	for (size_t seed = 0; seed < 200; seed++)
 	{
-		test_vector<std::vector<int> >(100, seed, file_vector);
-		test_vector<ft::vector<int> >(100, seed, my_file_vector);
+		srand(seed);
+		rand_value = rand() % 100;
+		if (my_tests != 1)
+			test_vector<std::vector<int> >(rand_value, seed, file_vector);
+		if (my_tests != 0)
+			test_vector<ft::vector<int> >(rand_value, seed, my_file_vector);
 	}
 
 /**
  * TESTS MAP
  */
-	for (size_t seed = 0; seed < 200; seed++)
+	for (size_t seed = 0; seed < 50; seed++)
 	{
-		test_map<std::map<int, int> >(100, seed, file_map);
-		test_map<ft::map<int, int> >(100, seed, my_file_map);
+		srand(seed);
+		rand_value = rand() % 100;
+		if (my_tests != 1)
+			test_map<std::map<int, char> >(rand_value, seed, file_map);
+		if (my_tests != 0)
+			test_map<ft::map<int, char> >(rand_value, seed, my_file_map);
 	}
-	
 	
 	return 0;
 }

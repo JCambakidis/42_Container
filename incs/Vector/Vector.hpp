@@ -382,7 +382,7 @@ namespace ft
 		 */
 			reference at (size_type n) 
 			{
-				if (_size < n)
+				if (n >= _size)
 					throw std::out_of_range("vector");
 				return _datas[n];
 			}
@@ -396,7 +396,7 @@ namespace ft
 		 */
 			const_reference at (size_type n) const 
 			{
-				if (_size < n)
+				if (n >= _size)
 					throw std::out_of_range("vector");
 				return _datas[n];
 			}

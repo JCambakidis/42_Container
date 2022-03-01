@@ -8,10 +8,7 @@ void	test_vector_assign_nv(Vector &vect, std::ofstream &file)
 {
 	file << std::endl << "************* test_vector_assign_nv *************" << std::endl << std::endl;
  	vect.assign((size_t)15, f<typename Vector::value_type>(8));
- 	for (size_t i = 0; i < vect.size(); i++)
- 	{
- 		file << "index:" << i << " | value:" << vect[i] << std::endl;
- 	}
+ 	show_vector_datas(vect, file);
  	show_vector_infos(vect, file);
 }
 
@@ -23,10 +20,7 @@ void	test_vector_assign_fl(Vector &vect, std::ofstream &file)
 	for (size_t i = 0; i < 5; i++)
 		vect2.push_back(f<typename Vector::value_type>(i * 10));
 	vect.assign(vect2.begin(), vect2.end());
-	for (size_t i = 0; i < vect.size(); i++)
-	{
-		file << "index:" << i << " | value:" << vect[i] << std::endl;
-	}
+ 	show_vector_datas(vect, file);
 	show_vector_infos(vect, file);
 
 }

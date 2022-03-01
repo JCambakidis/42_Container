@@ -12,24 +12,15 @@ void	test_vector_resize(Vector &vect, std::ofstream &file)
 	file << std::endl << "************* test_vector_resize *************" << std::endl << std::endl;
  	vect.resize(3);
  	file << "resize 3" << std::endl;
- 	for (size_t i = 0; i < vect.size(); i++)
- 	{
- 		file << "index:" << i << " | value:" << vect[i] << std::endl;
- 	}
+ 	show_vector_datas(vect, file);
  	show_vector_infos(vect, file);
  	vect.resize(18);
  	file << "resize 18" << std::endl;
- 	for (size_t i = 0; i < vect.size(); i++)
- 	{
- 		file << "index:" << i << " | value:" << vect[i] << std::endl;
- 	}
+ 	show_vector_datas(vect, file);
  	show_vector_infos(vect, file);
  	vect.resize(20, f<typename Vector::value_type>(5));
  	file << "resize 20 - 5" << std::endl;
- 	for (size_t i = 0; i < vect.size(); i++)
- 	{
- 		file << "index:" << i << " | value:" << vect[i] << std::endl;
- 	}
+ 	show_vector_datas(vect, file);
  	show_vector_infos(vect, file);
 }
 

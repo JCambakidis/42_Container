@@ -70,6 +70,12 @@ tvect: fclean all
 	@printf "\033[2K\r$(CYAN)################################$(RESET)\n\n"
 	-./scripts/testvector.sh
 
-tall: fclean all tvect tmap
+teatime: fclean all
+	@printf "\n\033[2K\r$(CYAN)################################$(RESET)\n"
+	@printf "\033[2K\r$(CYAN)########## Test Time ###########$(RESET)\n"
+	@printf "\033[2K\r$(CYAN)################################$(RESET)\n\n"
+	-./scripts/testtime.sh
 
-.PHONY: all clean fclean re tall tvect tmap
+tall: fclean all tvect tmap teatime
+
+.PHONY: all clean fclean re tall tvect tmap teatime
