@@ -40,7 +40,14 @@ template <class Vector>
 void show_vector_infos(Vector &vect, std::ofstream &file)
 {
 	if (vect.capacity() > 0)
-		file << "size: " << vect.size() << " | front:" << vect.front() << " | back:" << vect.back() << std::endl << std::endl;
+	{
+		file << "size: " << vect.size() << " | front:" << vect.front() << " | back:";
+		if (vect.size() > 0)
+			file << vect.back();
+		else
+			file << "undefind";
+		file << std::endl << std::endl;
+	}
 }
 
 template <class Vector>
@@ -89,7 +96,7 @@ void test_vector(size_t count, int seed, std::ofstream &file)
 	test_vector_elements_access(vector, file);
 	test_vector_resize(vector, file);
 	test_vector_insert(vector, file);
-	//test_vector_clear(vector, file);
+	test_vector_clear(vector, file);
 	test_vector_push_back(vector, file, count, seed);
 	test_vector_assign(vector, file);
 	test_vector_push_back(vector, file, count, seed);

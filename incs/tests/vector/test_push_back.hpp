@@ -14,6 +14,7 @@ void test_vector_push_back(Vector &vect, std::ofstream &file, size_t count, int 
  	for (size_t i = 0; i < count; i++)
  	{
  		const int idx = rand() % count;
+		file << "value added: " << idx << std::endl;
  		vect.push_back(f<typename Vector::value_type>(idx));
 		show_vector_infos(vect, file);
  	}

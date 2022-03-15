@@ -12,7 +12,7 @@ void	test_vector_clear(Vector &vect, std::ofstream &file)
 	file << std::endl << "************* test_vector_clear *************" << std::endl << std::endl;
  	vect.clear();
  	file << "is empty ?:" << vect.empty() << std::endl;
- 	file << "size: " << vect.size() << " | capacity:" << vect.capacity() << std::endl; 
+ 	file << "size: " << vect.size() << std::endl; 
 }
 
 #endif
