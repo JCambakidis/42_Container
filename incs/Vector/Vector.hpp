@@ -90,7 +90,7 @@ namespace ft
 		 * @param alloc - Allocator's reference, set to default allocator
 		 */
 			template <class InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL): _alloc(alloc)
 			{
 				_size = 0;
 				_capacity = 1;
@@ -460,7 +460,7 @@ namespace ft
 		 * @return void
 		 */
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last)
+			void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
 			{
 				clear();
 				check_capacity();
@@ -595,7 +595,7 @@ namespace ft
 		 * @return void
 		 */
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last)
+			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
 			{
 				size_type index = position - begin();
 				if (index <= _capacity)
