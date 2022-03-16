@@ -4,188 +4,191 @@
 # include <memory>
 # include "../Map/Tree_node.hpp"
 
-template <class Node>
-class bidirectional_iterator { 
-	public:
-		typedef typename Node::reference reference;
-		typedef typename Node::pointer pointer;
-		typedef std::bidirectional_iterator_tag iterator_category;
+namespace ft
+{
+	template <class Node>
+	class bidirectional_iterator { 
+		public:
+			typedef typename Node::reference reference;
+			typedef typename Node::pointer pointer;
+			typedef std::bidirectional_iterator_tag iterator_category;
 
-		bidirectional_iterator() : _node(nullptr) {}
-		bidirectional_iterator(const bidirectional_iterator &it) : _node(it._node) {}
-		bidirectional_iterator(Node *n): _node(n) {}
-		~bidirectional_iterator(){}
+			bidirectional_iterator() : _node(nullptr) {}
+			bidirectional_iterator(const bidirectional_iterator &it) : _node(it._node) {}
+			bidirectional_iterator(Node *n): _node(n) {}
+			~bidirectional_iterator(){}
 
-		Node *get_node() {return _node;}
+			Node *get_node() {return _node;}
 
-		bidirectional_iterator& operator=(const bidirectional_iterator &it)
-		{
-			_node = it._node;
-			return *this;
-		}
-
-		bool operator==(const bidirectional_iterator &it) const
-		{
-			if(_node != NULL && it._node != NULL)
-			{				
-				if (it._node->color == -1 || _node->color == -1)
-					return (_node->data.first == it._node->data.first) && (_node->data.second == it._node->data.second) && (_node->color == it._node->color);
-				return (_node->data.first == it._node->data.first) && (_node->data.second == it._node->data.second);
-			}
-			return false;
-		}
-
-		bool operator!=(const bidirectional_iterator &it) const
-		{
-			if(_node != NULL && it._node != NULL)
+			bidirectional_iterator& operator=(const bidirectional_iterator &it)
 			{
-				if (it._node->color == -1 || _node->color == -1)
-					return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second) || (_node->color != it._node->color);
-				return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second);
-			}
-			return false;
-		}
-
-		bidirectional_iterator& operator++()
-		{
-			Node *tmp = _node;
-		
-			if (tmp->color == -1)
+				_node = it._node;
 				return *this;
-			if (tmp->right == NULL)
-			{
-				if (tmp == tmp->parent->right)
-				{
-					while (tmp->parent != NULL && tmp == tmp->parent->right)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->right;
-						return *this;
-					}
-					tmp = tmp->parent;
-				}
-				else
-					tmp = tmp->parent;
 			}
-			else if (tmp->right != NULL)
-			{
-				tmp = tmp->right;
-				while (tmp->left != NULL && tmp->color != -1)
-					tmp = tmp->left;
-			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
 
-		bidirectional_iterator operator++(int)
-		{
-			Node *tmp = _node;
-		
-			if (tmp->color == -1)
-				return *this;
-			if (tmp->right == NULL)
+			bool operator==(const bidirectional_iterator &it) const
 			{
-				if (tmp == tmp->parent->right)
-				{
-					while (tmp->parent != NULL && tmp == tmp->parent->right)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->right;
-						return *this;
-					}
-					tmp = tmp->parent;
+				if(_node != NULL && it._node != NULL)
+				{				
+					if (it._node->color == -1 || _node->color == -1)
+						return (_node->data.first == it._node->data.first) && (_node->data.second == it._node->data.second) && (_node->color == it._node->color);
+					return (_node->data.first == it._node->data.first) && (_node->data.second == it._node->data.second);
 				}
-				else
-					tmp = tmp->parent;
+				return false;
 			}
-			else if (tmp->right != NULL)
-			{
-				tmp = tmp->right;
-				while (tmp->left != NULL && tmp->color != -1)
-					tmp = tmp->left;
-			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
 
-		bidirectional_iterator& operator--()
-		{
-			Node *tmp = _node;
-			if(tmp->color == -1 && tmp->parent == NULL)
-				return *this;
-			if (tmp->left == NULL && tmp->parent != NULL)
+			bool operator!=(const bidirectional_iterator &it) const
 			{
-				if (tmp == tmp->parent->left)
+				if(_node != NULL && it._node != NULL)
 				{
-					while (tmp == tmp->parent->left)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->left;
-						return *this;
-					}
-					tmp = tmp->parent;
+					if (it._node->color == -1 || _node->color == -1)
+						return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second) || (_node->color != it._node->color);
+					return (_node->data.first != it._node->data.first) || (_node->data.second != it._node->data.second);
 				}
-				else
-					tmp = tmp->parent;
+				return false;
 			}
-			else if (tmp->left != NULL)
+
+			bidirectional_iterator& operator++()
 			{
-				tmp = tmp->left;
-				while (tmp->right != NULL)
+				Node *tmp = _node;
+			
+				if (tmp->color == -1)
+					return *this;
+				if (tmp->right == NULL)
+				{
+					if (tmp == tmp->parent->right)
+					{
+						while (tmp->parent != NULL && tmp == tmp->parent->right)
+							tmp = tmp->parent;
+						if (tmp->parent == NULL)
+						{
+							_node = _node->right;
+							return *this;
+						}
+						tmp = tmp->parent;
+					}
+					else
+						tmp = tmp->parent;
+				}
+				else if (tmp->right != NULL)
+				{
 					tmp = tmp->right;
-			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
-
-		bidirectional_iterator operator--(int)
-		{
-			Node *tmp = _node;
-			if (tmp->left == NULL && tmp->parent != NULL)
-			{
-				if (tmp == tmp->parent->left)
-				{
-					while (tmp == tmp->parent->left)
-						tmp = tmp->parent;
-					if (tmp->parent == NULL)
-					{
-						_node = _node->left;
-						return *this;
-					}
-					tmp = tmp->parent;
+					while (tmp->left != NULL && tmp->color != -1)
+						tmp = tmp->left;
 				}
-				else
-					tmp = tmp->parent;
+				if (tmp != NULL)
+					_node = tmp;
+				return *this;
 			}
-			else if (tmp->left != NULL)
+
+			bidirectional_iterator operator++(int)
 			{
-				tmp = tmp->left;
-				while (tmp->right != NULL)
+				Node *tmp = _node;
+			
+				if (tmp->color == -1)
+					return *this;
+				if (tmp->right == NULL)
+				{
+					if (tmp == tmp->parent->right)
+					{
+						while (tmp->parent != NULL && tmp == tmp->parent->right)
+							tmp = tmp->parent;
+						if (tmp->parent == NULL)
+						{
+							_node = _node->right;
+							return *this;
+						}
+						tmp = tmp->parent;
+					}
+					else
+						tmp = tmp->parent;
+				}
+				else if (tmp->right != NULL)
+				{
 					tmp = tmp->right;
+					while (tmp->left != NULL && tmp->color != -1)
+						tmp = tmp->left;
+				}
+				if (tmp != NULL)
+					_node = tmp;
+				return *this;
 			}
-			if (tmp != NULL)
-				_node = tmp;
-			return *this;
-		}
 
-		reference operator*() const
-		{
-			return _node->data;
-		}
+			bidirectional_iterator& operator--()
+			{
+				Node *tmp = _node;
+				if(tmp->color == -1 && tmp->parent == NULL)
+					return *this;
+				if (tmp->left == NULL && tmp->parent != NULL)
+				{
+					if (tmp == tmp->parent->left)
+					{
+						while (tmp == tmp->parent->left)
+							tmp = tmp->parent;
+						if (tmp->parent == NULL)
+						{
+							_node = _node->left;
+							return *this;
+						}
+						tmp = tmp->parent;
+					}
+					else
+						tmp = tmp->parent;
+				}
+				else if (tmp->left != NULL)
+				{
+					tmp = tmp->left;
+					while (tmp->right != NULL)
+						tmp = tmp->right;
+				}
+				if (tmp != NULL)
+					_node = tmp;
+				return *this;
+			}
 
-		pointer operator->() const
-		{
-			return &_node->data;
-		}
+			bidirectional_iterator operator--(int)
+			{
+				Node *tmp = _node;
+				if (tmp->left == NULL && tmp->parent != NULL)
+				{
+					if (tmp == tmp->parent->left)
+					{
+						while (tmp == tmp->parent->left)
+							tmp = tmp->parent;
+						if (tmp->parent == NULL)
+						{
+							_node = _node->left;
+							return *this;
+						}
+						tmp = tmp->parent;
+					}
+					else
+						tmp = tmp->parent;
+				}
+				else if (tmp->left != NULL)
+				{
+					tmp = tmp->left;
+					while (tmp->right != NULL)
+						tmp = tmp->right;
+				}
+				if (tmp != NULL)
+					_node = tmp;
+				return *this;
+			}
 
-	private:
-		Node *_node;
-};
+			reference operator*() const
+			{
+				return _node->data;
+			}
+
+			pointer operator->() const
+			{
+				return &_node->data;
+			}
+
+		private:
+			Node *_node;
+	};
+}
 
 #endif
