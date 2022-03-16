@@ -1,7 +1,7 @@
 #ifndef STACK_HPP
 # define STACK_HPP
 
-#include "../Vector/Vector.hpp"
+#include "../incs/Vector/Vector.hpp"
 
 namespace ft
 {
@@ -9,11 +9,11 @@ namespace ft
 	/**
 	 * Stacks are sequence containers representing arrays that can use some interaction of it.
 	 * 
-	 * @tparam T - type of objects who can be use in this vector
-	 * @tparam Container - container of vector with type value "T"
+	 * @tparam T - type of objects who can be use in this Deque
+	 * @tparam Container - container of deque with type value "T"
 	 */
 
-	template <class T, class Container = ft::vector<T> >
+	template <class T, class Container = vector<T> >
 	class stack
 	{
 		public:
@@ -57,7 +57,6 @@ namespace ft
 		 */
 			~stack(void)
 			{
-				_c.clear();
 			}
 
 	/**

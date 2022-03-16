@@ -58,17 +58,22 @@ fclean: clean
 
 re:	fclean all
 
+tvect: fclean all
+	@printf "\n\033[2K\r$(GREEN)################################$(RESET)\n"
+	@printf "\033[2K\r$(GREEN)######### Test Vector ##########$(RESET)\n"
+	@printf "\033[2K\r$(GREEN)################################$(RESET)\n\n"
+	-./scripts/testvector.sh
 tmap: fclean all
 	@printf "\n\033[2K\r$(GREEN)################################$(RESET)\n"
 	@printf "\033[2K\r$(GREEN)########### Test Map ###########$(RESET)\n"
 	@printf "\033[2K\r$(GREEN)################################$(RESET)\n\n"
 	-./scripts/testmap.sh
+tstk: fclean all
+	@printf "\n\033[2K\r$(GREEN)################################$(RESET)\n"
+	@printf "\033[2K\r$(GREEN)########## Test Stack ##########$(RESET)\n"
+	@printf "\033[2K\r$(GREEN)################################$(RESET)\n\n"
+	-./scripts/teststack.sh
 
-tvect: fclean all
-	@printf "\n\033[2K\r$(CYAN)################################$(RESET)\n"
-	@printf "\033[2K\r$(CYAN)######### Test Vector ##########$(RESET)\n"
-	@printf "\033[2K\r$(CYAN)################################$(RESET)\n\n"
-	-./scripts/testvector.sh
 
 teatimevect: fclean all
 	@printf "\n\033[2K\r$(CYAN)################################$(RESET)\n"
@@ -80,7 +85,12 @@ teatimemap: fclean all
 	@printf "\033[2K\r$(CYAN)######## Test Time Map #########$(RESET)\n"
 	@printf "\033[2K\r$(CYAN)################################$(RESET)\n\n"
 	-./scripts/testtimeMap.sh
+teatimestack: fclean all
+	@printf "\n\033[2K\r$(CYAN)################################$(RESET)\n"
+	@printf "\033[2K\r$(CYAN)####### Test Time Stack ########$(RESET)\n"
+	@printf "\033[2K\r$(CYAN)################################$(RESET)\n\n"
+	-./scripts/testtimeStack.sh
 
-tall: fclean all tvect tmap teatimevect teatimemap 
+tall: fclean all tvect tmap tstk teatimevect teatimemap teatimestack
 
-.PHONY: all clean fclean re tall tvect tmap teatimemap teatimevect
+.PHONY: all clean fclean re tall tvect tmap tstk teatimemap teatimevect teatimestack

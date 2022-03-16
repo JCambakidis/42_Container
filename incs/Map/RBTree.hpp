@@ -453,13 +453,31 @@ namespace ft
 		 * Assign rhs's root in tree root.
 		 *
 		 * @param rhs - reference of tree
+		 * @return pointer of this
 		 */
-			RBTree &operator=(RBTree const &rhs) { _root = rhs._root; _alloc = rhs._alloc; return *this; }
+			RBTree &operator=(RBTree const &rhs)
+			{
+				if (&rhs == this)
+					return (*this);
+				clear();
+				insert(rhs.begin(), rhs.end());
+				return (*this);
+			}
+
+	/**
+	 * Destructor
+	 */
 
 		/**
 		 * Destruct tree and free memory.
 		 */
-			~RBTree(void) {clear(_root); _root = NULL; }
+			~RBTree(void) 
+			{
+				if (get_size() > 0 && _root != NULL)
+				{
+					clear(_root); 
+					_root = NULL; }
+				}
 
 	/**
 	 * Getter
@@ -685,26 +703,23 @@ namespace ft
 		 */
 			void clear(node *n)
 			{
-				if (n != NULL)
+				if (n != NULL && (n->color == 0 || n->color == 1))
 				{
-					if (n->color != -1)
+					if (n->left != NULL)
+						clear(n->left);
+					if (n->right != NULL)
+						clear(n->right);
+					if (n == _root)
 					{
-						if (n->left != NULL)
-							clear(n->left);
-						if (n->right != NULL)
-							clear(n->right);
-						if (n == _root)
-						{
-							_alloc.destroy(_root);
-							_alloc.deallocate(_root, 1);
-							_root = NULL;
-						}
-						else
-						{
-							_alloc.destroy(n);
-							_alloc.deallocate(n, 1);
-							n = NULL;
-						}
+						_alloc.destroy(_root);
+						_alloc.deallocate(_root, 1);
+						_root = NULL;
+					}
+					else
+					{
+						_alloc.destroy(n);
+						_alloc.deallocate(n, 1);
+						n = NULL;
 					}
 				}
 				_alloc.destroy(_emptyNode);

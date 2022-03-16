@@ -121,14 +121,13 @@ namespace ft
 		 * 
 		 * @param x - map's reference
 		 */
-			map (const map& x)
+			map (const map &x)
 			{
-				if (x != this)
-				{
-					_alloc = x._alloc;
-					_comp = x._comp;
-					_tree = x._tree;
-				}
+				_alloc = x._alloc;
+				_comp = x._comp;
+				_tree =_alloc.allocate(1);
+				_alloc.construct(_tree, RBTree<Key, T>());
+				insert(x.begin(), x.end());
 			}
 
 		/**
@@ -147,13 +146,11 @@ namespace ft
 		 */
 			map& operator= (const map& x)
 			{
-				if (x != this)
-				{
-					_alloc = x._alloc;
-					_comp = x._comp;
-					_tree = x._tree;
-				}
-				return *this;
+				if (&x == this)
+					return (*this);
+				clear();
+				insert(x.begin(), x.end());
+				return (*this);
 			}
 
 	/**
@@ -415,7 +412,7 @@ namespace ft
 		 */
 			void clear()
 			{
-				if (_tree != NULL)
+				if (_tree != NULL && _tree->getRoot() != NULL)
 				{
 					_tree->clear(_tree->getRoot());
 					_alloc.destroy(_tree);
