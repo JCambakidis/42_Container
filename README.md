@@ -8,8 +8,6 @@ We are asked to recreate some c++98 container.
 - Stack
 - Map
 
-All are coded in c++98.
-
 To execute map tests use : 
 ```bash
 make tmap
